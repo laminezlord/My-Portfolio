@@ -289,7 +289,7 @@ nav {
 /* SKILLS - 3 CARDS */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 24px;
 }
 .skill-card {
@@ -387,6 +387,69 @@ nav {
   background: var(--bg2);
 }
 .project-links a:hover { background: var(--accent); color: white; }
+
+.project-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 6px;
+}
+
+/* MORE PROJECTS - COMPACT GRID */
+.subsection-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 56px 0 24px;
+}
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.mini-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+.mini-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px var(--shadow);
+}
+.mini-card-head { display: flex; align-items: center; gap: 12px; }
+.mini-card-head .project-icon { width: 42px; height: 42px; font-size: 18px; border-radius: 10px; }
+.mini-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+.mini-card p { font-size: 14px; color: var(--text2); line-height: 1.6; flex: 1; }
+.mini-card .project-links { gap: 10px; }
+.mini-card .project-links a { padding: 6px 12px; font-size: 12px; }
+
+.practice-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.practice-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 99px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  transition: all 0.2s;
+}
+.practice-links a:hover { border-color: var(--accent); color: var(--accent); }
 
 /* CONTACT */
 .contact-wrap {
@@ -571,8 +634,12 @@ footer a:hover { text-decoration: underline; }
     flex-direction: column; 
     align-items: center;
   }
-  .project-links { margin-left: 0; }
-  
+  .project-links { margin-left: 0; flex-wrap: wrap; justify-content: center; }
+  .mini-card { text-align: left; }
+  .mini-card-head .project-icon { margin: 0; }
+  .mini-card .project-links { justify-content: flex-start; }
+  .subsection-title { margin-top: 44px; }
+
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
   .contact-detail { padding: 12px 16px; }
   form { padding: 24px; }
@@ -664,10 +731,24 @@ footer a:hover { text-decoration: underline; }
           <span class="tag">JavaScript</span>
           <span class="tag">C</span>
           <span class="tag">Java</span>
+          <span class="tag">Dart</span>
           <span class="tag">SQL</span>
         </div>
       </div>
-      
+
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fas fa-server"></i></div>
+        <h4>Backend & Mobile</h4>
+        <div class="tag-list">
+          <span class="tag">Django</span>
+          <span class="tag">Django REST Framework</span>
+          <span class="tag">JWT Auth</span>
+          <span class="tag">Flutter</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+
       <div class="skill-card">
         <div class="skill-card-icon"><i class="fas fa-laptop-code"></i></div>
         <h4>Frontend Development</h4>
@@ -675,6 +756,8 @@ footer a:hover { text-decoration: underline; }
           <span class="tag">HTML5</span>
           <span class="tag">CSS3</span>
           <span class="tag">React</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Vite</span>
           <span class="tag">Responsive Design</span>
           <span class="tag">UI/UX Design</span>
         </div>
@@ -698,62 +781,260 @@ footer a:hover { text-decoration: underline; }
     <div class="section-label">What I've built</div>
     <h2>Featured Projects</h2>
     <div class="projects-grid">
+
       <div class="project-card">
-        <div class="project-icon"><i class="fab fa-youtube" style="color: #ff0000;"></i></div>
+        <div class="project-icon"><i class="fas fa-boxes-stacked" style="color: #0d9488;"></i></div>
         <div class="project-info">
+          <span class="project-badge">Full-stack</span>
+          <h3>StockPilot: Inventory Management System</h3>
+          <p>A full-stack inventory platform with a Django REST API and a React dashboard. Manages products, categories, suppliers, customers and orders, deducts stock automatically when an order is placed, logs every stock movement, and includes sales, revenue and low-stock reports. JWT login with token refresh, and admin and staff roles enforced on the server.</p>
+          <div class="project-footer">
+            <div class="tag-list">
+              <span class="tag">Django REST Framework</span>
+              <span class="tag">React</span>
+              <span class="tag">Tailwind CSS</span>
+              <span class="tag">JWT</span>
+              <span class="tag">Recharts</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/laminezlord/inventory-management-system-frontend" target="_blank"><i class="fab fa-github"></i> Frontend</a>
+              <a href="https://github.com/laminezlord/inventory-management-system-backend" target="_blank"><i class="fab fa-github"></i> Backend</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon"><i class="fas fa-car-side" style="color: #f59e0b;"></i></div>
+        <div class="project-info">
+          <span class="project-badge">Mobile app</span>
+          <h3>AutoWave</h3>
+          <p>A Flutter app for Android, iOS and web that connects drivers with nearby mechanics. Drivers search by budget, track the mechanic live on a map, and pay into an escrow wallet funded through Paystack. It also has car-part recycling pickups and AutoLearn, an AI tutor powered by Gemini that works in 11 languages.</p>
+          <div class="project-footer">
+            <div class="tag-list">
+              <span class="tag">Flutter</span>
+              <span class="tag">Dart</span>
+              <span class="tag">Supabase</span>
+              <span class="tag">Paystack</span>
+              <span class="tag">Gemini AI</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/laminezlord/autowave" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon"><i class="fas fa-link" style="color: var(--accent);"></i></div>
+        <div class="project-info">
+          <span class="project-badge">Full-stack</span>
+          <h3>Snapl: URL Shortener</h3>
+          <p>A Django URL shortener with user accounts, custom or auto-generated aliases, click tracking, search and filtering, and a dashboard that adapts to the user's role. Includes a marketing landing page, an in-app admin area, custom error pages, and security settings ready for production.</p>
+          <div class="project-footer">
+            <div class="tag-list">
+              <span class="tag">Python</span>
+              <span class="tag">Django</span>
+              <span class="tag">HTML/CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/laminezlord/url-shortner-backend" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon"><i class="fas fa-pen-nib" style="color: #a855f7;"></i></div>
+        <div class="project-info">
+          <span class="project-badge">React app</span>
+          <h3>Cream Blog</h3>
+          <p>A multi-user blogging platform built in React. Users can sign up, write, edit and delete posts, browse a feed, and manage their posts from a personal dashboard. It uses protected routes, context for login and theme, and a light/dark mode.</p>
+          <div class="project-footer">
+            <div class="tag-list">
+              <span class="tag">React</span>
+              <span class="tag">React Router</span>
+              <span class="tag">Tailwind CSS</span>
+              <span class="tag">Vite</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/laminezlord/Blog-web" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://blog-web-wheat-three.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon"><i class="fas fa-heart-pulse" style="color: #ef4444;"></i></div>
+        <div class="project-info">
+          <span class="project-badge">Prototype</span>
+          <h3>Vitalis AI</h3>
+          <p>A prototype for an AI healthcare assistant: a landing page presenting its features, a how-it-works section, and sign-in and sign-up screens.</p>
+          <div class="project-footer">
+            <div class="tag-list">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">JavaScript</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/laminezlord/Vitalis-AI-Prototype" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://laminezlord.github.io/Vitalis-AI-Prototype/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon"><i class="fas fa-globe" style="color: #06b6d4;"></i></div>
+        <div class="project-info">
+          <span class="project-badge">Business website</span>
+          <h3>Nexora Digitals</h3>
+          <p>The website for Nexora Digitals, a web design and development studio. Includes a hero section with browser and phone mockups, a services overview, a four-step process, and a WhatsApp chat button so clients can start a project quickly.</p>
+          <div class="project-footer">
+            <div class="tag-list">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">JavaScript</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/laminezlord/Nexora-digitals" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://nexora-digitals-nine.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">More Projects</h3>
+    <div class="mini-grid">
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-bowl-food" style="color: #ea580c;"></i></div>
+          <h3>Drehyalty Foods</h3>
+        </div>
+        <p>A food business website for homemade Nigerian soups, meal bowls and lunch packs in Lagos, with a menu, customer reviews, opening hours and ordering through WhatsApp.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/drehyalty-foods" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://drehyalty-foods.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-house" style="color: #b45309;"></i></div>
+          <h3>Luxe Haven Properties</h3>
+        </div>
+        <p>A real-estate website for Luxe Haven Properties, with property listings, support services and a contact section.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/Lux_haven" target="_blank"><i class="fab fa-github"></i> Code</a>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-plane-departure" style="color: #dc2626;"></i></div>
+          <h3>Goodlife Travel Agency</h3>
+        </div>
+        <p>A website for a Nigerian travel agency that specialises in Canada, listing its services and encouraging visitors to get in touch.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/Travel-Agency" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://goodlifeoverseasolutionvercelapp.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-earth-americas" style="color: #0ea5e9;"></i></div>
+          <h3>Roamora Travels</h3>
+        </div>
+        <p>A multi-page travel company website with separate Home, About, Services and Contact pages.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/Roamora_Travels" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://roamora-travels.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-book" style="color: #7c3aed;"></i></div>
+          <h3>Book Nest</h3>
+        </div>
+        <p>A book manager web app for keeping track of your reading list.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/Book_Web" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://book-web-theta.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fab fa-youtube" style="color: #ff0000;"></i></div>
           <h3>YouTube UI Clone</h3>
-          <p>Built a pixel-perfect YouTube homepage clone in 3 days during my frontend module at Aptech. Implemented responsive grid layout, hover states, and mobile navigation.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">JavaScript</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/YouTube" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://you-tube-chi-neon.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-            </div>
-          </div>
+        </div>
+        <p>A pixel-perfect YouTube homepage clone built in 3 days, with a responsive grid layout, hover states and mobile navigation.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/YouTube" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://you-tube-chi-neon.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
         </div>
       </div>
 
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-check-square" style="color: #10b981;"></i></div>
-        <div class="project-info">
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-check-square" style="color: #10b981;"></i></div>
           <h3>To-Do Task Manager</h3>
-          <p>A fully functional task management app with add, complete, delete, and local storage persistence. Features include task filtering and completion tracking.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">JavaScript</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/To-Do" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://to-do-delta-two.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-            </div>
-          </div>
+        </div>
+        <p>A task manager where you can add, complete, filter and delete tasks, with completion tracking. Tasks are saved in local storage.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/To-Do" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://to-do-delta-two.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
         </div>
       </div>
 
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-graduation-cap" style="color: var(--accent);"></i></div>
-        <div class="project-info">
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-graduation-cap" style="color: var(--accent);"></i></div>
           <h3>Aptech Institutional Website</h3>
-          <p>Developed a multi-page website for Aptech as a class project. Features include responsive navigation, course listings, and mobile-first design.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">Responsive</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/Aptech" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://aptech-sandy.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-            </div>
-          </div>
+        </div>
+        <p>A multi-page website for Aptech built as a class project, with responsive navigation, course listings and a mobile-first design.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/Aptech" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://aptech-sandy.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
         </div>
       </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-circle-check" style="color: #22c55e;"></i></div>
+          <h3>Smart Form Validation</h3>
+        </div>
+        <p>A sign-up form that checks each field as you type and shows clear error and success messages.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/Form-Validation" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://form-validation-zeta-navy.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-card-head">
+          <div class="project-icon"><i class="fas fa-tv" style="color: #f43f5e;"></i></div>
+          <h3>Anime Streaming UI</h3>
+        </div>
+        <p>A front-end recreation of an anime streaming site, with a poster grid of the latest releases and several linked pages.</p>
+        <div class="project-links">
+          <a href="https://github.com/laminezlord/animepahe" target="_blank"><i class="fab fa-github"></i> Code</a>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Practice & Coursework</h3>
+    <div class="practice-links">
+      <a href="https://github.com/laminezlord/Python-Programs" target="_blank"><i class="fab fa-python"></i> Python Programs</a>
+      <a href="https://github.com/laminezlord/Java-Script-Programs" target="_blank"><i class="fab fa-js"></i> JavaScript Programs</a>
+      <a href="https://github.com/laminezlord/java-projects" target="_blank"><i class="fab fa-java"></i> Java Projects</a>
+      <a href="https://github.com/laminezlord/C-Programs" target="_blank"><i class="fas fa-c"></i> C Programs</a>
+      <a href="https://github.com/laminezlord/Dart-Programs" target="_blank"><i class="fas fa-code"></i> Dart Programs</a>
     </div>
   </section>
 
