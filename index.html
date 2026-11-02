@@ -240,18 +240,31 @@ img { display: block; max-width: 100%; }
   box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--c) 80%, #000), 0 3px 0 color-mix(in srgb, var(--c) 55%, #000); }
 
 /* FEATURED */
-.featured { display: grid; gap: 16px; }
+.featured { display: grid; gap: 20px; perspective: 1600px; }
 .feat {
   display: grid;
-  grid-template-columns: 60px minmax(0, 1fr) auto;
-  gap: 8px 28px;
-  align-items: start;
-  padding: 32px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 40px;
+  align-items: center;
+  padding: 36px;
   background: var(--surface);
-  border-radius: 20px;
+  border-radius: 24px;
   border: 1px solid var(--line);
   position: relative;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease-out, box-shadow 0.25s;
 }
+.feat:nth-child(even) .feat-text { order: 2; }
+.feat::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(480px circle at var(--gx, 50%) var(--gy, 50%), color-mix(in srgb, var(--cobalt) 10%, transparent), transparent 70%);
+  opacity: 0; transition: opacity 0.25s;
+}
+.feat:hover { box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 35%, transparent); }
+.feat:hover::before { opacity: 1; }
+.feat-text { transform: translateZ(24px); }
+.feat .key { margin-bottom: 18px; }
 .feat-kind { font-size: var(--step--1); color: var(--ink-2); font-weight: 500; margin-bottom: 4px; }
 .feat h3 {
   font-family: var(--display);
@@ -261,51 +274,119 @@ img { display: block; max-width: 100%; }
   line-height: 1.15;
   margin-bottom: 12px;
 }
-.feat p { color: var(--ink-2); max-width: 64ch; margin-bottom: 16px; }
+.feat p { color: var(--ink-2); max-width: 60ch; margin-bottom: 16px; }
 .stack { font-size: var(--step--1); color: var(--ink-2); }
 .stack b { color: var(--ink); font-weight: 600; }
-.links { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
-.links a {
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.links a, .btn-preview {
   display: inline-flex; align-items: center; gap: 8px; justify-content: center;
-  padding: 10px 16px; border-radius: 10px;
-  font-weight: 600; font-size: 0.875rem; text-decoration: none;
+  padding: 10px 16px; border-radius: 10px; border: 0; cursor: pointer;
+  font: 600 0.875rem var(--body); text-decoration: none; color: var(--ink);
   background: var(--paper-2); white-space: nowrap;
 }
 .links a:hover { background: var(--ink); color: var(--paper); }
-.feat.flash, .more-item.flash { animation: flash 1.2s ease-out; }
-.more-item { border-radius: 4px; }
+.btn-preview { background: var(--cobalt); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--cobalt) 55%, #000); }
+.btn-preview:hover { transform: translateY(-1px); box-shadow: 0 4px 0 color-mix(in srgb, var(--cobalt) 55%, #000); }
+.btn-preview:active { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--cobalt) 55%, #000); }
 
-/* 3D tilt (pointer devices only; set from JS) */
-.featured { perspective: 1400px; }
-.feat {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transform-style: preserve-3d;
-  transition: transform 0.25s ease-out, box-shadow 0.25s;
+/* Screenshot in a tilted browser window */
+.shot { perspective: 2000px; }
+.frame {
+  border-radius: 12px; overflow: hidden; background: #0b0a1c;
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  box-shadow: 0 40px 60px -30px rgba(10, 8, 40, 0.55), 0 12px 24px -12px rgba(10, 8, 40, 0.35);
+  transform: rotateY(-9deg) rotateX(4deg);
+  transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
 }
-.feat::before {
-  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), color-mix(in srgb, var(--cobalt) 10%, transparent), transparent 70%);
-  opacity: 0; transition: opacity 0.25s;
+.feat:nth-child(even) .frame { transform: rotateY(9deg) rotateX(4deg); }
+.feat:hover .frame, .feat:focus-within .frame { transform: rotateY(0) rotateX(0) scale(1.02); }
+.frame-bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: #1B1A3F; }
+.frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: #FF5E7E; }
+.frame-bar span:nth-child(2) { background: #FFB627; }
+.frame-bar span:nth-child(3) { background: #2EC4A0; }
+.frame-bar em {
+  flex: 1; margin-left: 10px; font: 500 11px "JetBrains Mono", monospace; font-style: normal; color: #A9A7CF;
+  background: #131232; border-radius: 6px; padding: 4px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.feat:hover { box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 35%, transparent); }
-.feat:hover::before { opacity: 1; }
-.feat > .key { transform: translateZ(50px) translateY(-4px); }
-.feat:hover > .key { transform: translateZ(50px) translateY(2px); }
-.feat > div { transform: translateZ(24px); transform-style: preserve-3d; }
-.feat > .links { transform: translateZ(36px); }
+.frame img { width: 100%; height: auto; display: block; }
+.frame-empty .empty-body {
+  aspect-ratio: 800 / 499; display: grid; place-content: center; justify-items: center; gap: 8px; text-align: center; padding: 24px;
+  background: radial-gradient(circle at 30% 20%, #2EC4A0 0, transparent 45%), radial-gradient(circle at 80% 90%, #2F4BFF 0, transparent 50%), #1B1A3F;
+  color: #E9E8FF;
+}
+.empty-body i { font-size: 34px; color: #2EC4A0; }
+.empty-body strong { font-family: var(--display); font-size: 1.75rem; }
+.empty-body span { color: #C9C7EA; font-size: 0.875rem; max-width: 30ch; }
+
+/* AutoWave phones */
+.phones { position: relative; height: 380px; transform-style: preserve-3d; }
+.phone {
+  position: absolute; top: 0; width: 170px; border-radius: 26px; overflow: hidden;
+  border: 6px solid #14123A; background: #14123A;
+  box-shadow: 0 40px 50px -24px rgba(10, 8, 40, 0.6);
+  transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+}
+.phone img { width: 100%; height: auto; display: block; }
+.phone.p1 { left: 50%; transform: translateX(-150%) rotateY(28deg) translateZ(-40px) rotateZ(-4deg); }
+.phone.p2 { left: 50%; transform: translateX(-50%) translateZ(30px); z-index: 2; }
+.phone.p3 { left: 50%; transform: translateX(50%) rotateY(-28deg) translateZ(-40px) rotateZ(4deg); }
+.feat:hover .phone.p1 { transform: translateX(-165%) rotateY(12deg) translateZ(-20px) rotateZ(-2deg); }
+.feat:hover .phone.p3 { transform: translateX(65%) rotateY(-12deg) translateZ(-20px) rotateZ(2deg); }
+.feat:hover .phone.p2 { transform: translateX(-50%) translateZ(60px) translateY(-6px); }
+
+.feat.flash, .more-item.flash { animation: flash 1.2s ease-out; }
 @keyframes flash { 0% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--cobalt) 45%, transparent); } 100% { box-shadow: 0 0 0 0 transparent; } }
 
 /* MORE PROJECTS */
-.more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
-.more-item {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px;
-  padding-block: 20px; border-top: 1px solid var(--line);
-}
+.more { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+.more-item { display: flex; flex-direction: column; gap: 8px; border-radius: 14px; }
+.thumb { all: unset; display: block; cursor: pointer; margin-bottom: 10px; perspective: 900px; border-radius: 10px; }
+.thumb:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+.frame-sm { border-radius: 10px; transform: rotateX(8deg) rotateY(-6deg); }
+.frame-sm .frame-bar { height: 22px; padding: 0 9px; gap: 5px; }
+.frame-sm .frame-bar span { width: 7px; height: 7px; }
+.frame-sm .frame-bar em { font-size: 9px; padding: 2px 8px; margin-left: 6px; }
+.thumb:hover .frame-sm, .thumb:focus-visible .frame-sm { transform: rotateX(0) rotateY(0) translateY(-6px) scale(1.02); }
 .more-item h3 { font-family: var(--display); font-size: var(--step-1); font-weight: 700; letter-spacing: -0.01em; }
-.more-item p { grid-column: 1 / -1; color: var(--ink-2); font-size: 0.9375rem; max-width: 52ch; }
-.more-links { display: flex; gap: 14px; align-items: center; }
+.more-item p { color: var(--ink-2); font-size: 0.9375rem; flex: 1; }
+.more-links { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-top: 6px; }
 .more-links a { font-size: 0.875rem; font-weight: 600; color: var(--cobalt); text-decoration: none; }
 .more-links a:hover { text-decoration: underline; }
+.more-links .btn-preview { padding: 7px 12px; font-size: 0.8125rem; }
+
+/* PREVIEW WINDOW */
+.pv { border: 0; padding: 0; background: transparent; max-width: none; max-height: none; width: 100%; height: 100%; }
+.pv::backdrop { background: rgba(8, 7, 26, 0.72); backdrop-filter: blur(6px); }
+.pv[open] { display: grid; place-items: center; }
+.pv-win {
+  width: min(1200px, 100% - 32px); height: min(820px, 100% - 32px);
+  display: flex; flex-direction: column; border-radius: 16px; overflow: hidden;
+  background: #1B1A3F; box-shadow: 0 40px 80px -20px rgba(0,0,0,.6);
+  animation: pv-in 0.35s cubic-bezier(.2,.8,.2,1);
+  transition: width 0.35s cubic-bezier(.2,.8,.2,1);
+}
+.pv-win.is-phone { width: min(400px, 100% - 32px); }
+@keyframes pv-in { from { transform: perspective(1200px) rotateX(14deg) translateY(30px) scale(.94); opacity: 0; } }
+.pv-bar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #131232; color: #E9E8FF; }
+.pv-bar .dots { display: flex; gap: 6px; }
+.pv-bar .dots span { width: 11px; height: 11px; border-radius: 50%; background: #FF5E7E; }
+.pv-bar .dots span:nth-child(2) { background: #FFB627; }
+.pv-bar .dots span:nth-child(3) { background: #2EC4A0; }
+.pv-title { flex: 1; min-width: 0; font: 500 13px "JetBrains Mono", monospace; color: #A9A7CF; background: #1B1A3F; padding: 6px 12px; border-radius: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pv-bar button, .pv-bar a {
+  all: unset; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 34px; padding: 0 8px; box-sizing: border-box;
+  border-radius: 8px; color: #E9E8FF; font: 600 13px var(--body);
+}
+.pv-bar button:hover, .pv-bar a:hover, .pv-bar button[aria-pressed="true"] { background: #2C2B5A; }
+.pv-bar button:focus-visible, .pv-bar a:focus-visible { outline: 2px solid #8FA0FF; }
+.pv-bar [hidden] { display: none; }
+.pv-body { flex: 1; position: relative; background: #fff; overflow: auto; }
+.pv-body iframe { border: 0; width: 100%; height: 100%; display: block; background: #fff; }
+.pv-body.gallery { background: #0E0D26; display: flex; gap: 20px; align-items: flex-start; justify-content: center; padding: 20px; }
+.pv-body.gallery img { max-width: 100%; height: auto; border-radius: 10px; }
+.pv-body.gallery.phones-g img { width: min(300px, 80%); border-radius: 22px; }
+.pv-load { position: absolute; inset: 0; display: grid; place-items: center; color: #4C4A6E; font-weight: 600; pointer-events: none; }
+.hide-sm { display: inline; }
 
 .practice { margin-top: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
 .practice span { color: var(--ink-2); margin-right: 4px; }
@@ -361,7 +442,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 /* RESPONSIVE */
 @media (max-width: 960px) {
   .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .more { grid-template-columns: 1fr; }
+  .more { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feat { grid-template-columns: 1fr; gap: 28px; }
+  .feat .shot { order: -1; }
+  .feat:nth-child(even) .feat-text { order: 0; }
 }
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; min-height: 0; gap: 0; padding-top: 72px; }
@@ -373,18 +457,19 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 @media (max-width: 640px) {
   .nav-links { gap: 16px; }
   .nav-links a { font-size: 0.875rem; }
-  .feat { grid-template-columns: 1fr; padding: 24px; }
+  .feat { padding: 22px; }
+  .phones { height: 300px; }
+  .phone { width: 130px; border-width: 5px; border-radius: 20px; }
+  .more { grid-template-columns: 1fr; }
+  .hide-sm { display: none; }
   .key { width: 50px; height: 50px; font-size: 19px; }
-  .links { flex-direction: row; flex-wrap: wrap; }
   .skills { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
-  .more-item { grid-template-columns: 1fr; }
-  .more-links { order: 3; }
 }
 @media (max-width: 420px) {
   .nav-links .hide-xs { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .key, .btn { transition: none; }
+  .key, .btn, .frame, .phone, .pv-win { transition: none; animation: none; }
   .feat.flash { animation: none; }
 }
 </style>
@@ -433,147 +518,162 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   <section class="section wrap" id="projects">
     <div class="section-head">
       <h2>Things I've built</h2>
-      <p class="section-note">The six I'm proudest of, then everything else I've shipped.</p>
+      <p class="section-note">The six I'm proudest of, then everything else I've shipped. Hit preview to try a live site without leaving this page.</p>
     </div>
 
     <div class="featured">
       <article class="feat" id="p-stockpilot">
-        <span class="key" style="--c:#2F4BFF;--t:#fff" aria-hidden="true"><i class="fas fa-boxes-stacked"></i></span>
-        <div>
+        <div class="feat-text">
+          <span class="key" style="--c:#2F4BFF;--t:#fff" aria-hidden="true"><i class="fas fa-boxes-stacked"></i></span>
           <p class="feat-kind">Full-stack web app</p>
           <h3>StockPilot: inventory management</h3>
           <p>Manages products, categories, suppliers, customers and orders. Placing an order deducts stock automatically and logs the movement, and admins get sales, revenue and low-stock reports. JWT login with token refresh, with admin and staff roles enforced on the server.</p>
           <p class="stack"><b>Built with</b> Django REST Framework, React, Tailwind CSS, JWT, Recharts</p>
+          <div class="links"><button type="button" class="btn-preview" data-shots="images/projects/stockpilot.jpg" data-title="StockPilot: inventory management"><i class="fas fa-expand" aria-hidden="true"></i> View screenshot</button><a href="https://github.com/laminezlord/inventory-management-system-frontend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Frontend</a><a href="https://github.com/laminezlord/inventory-management-system-backend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Backend</a></div>
         </div>
-        <div class="links">
-          <a href="https://github.com/laminezlord/inventory-management-system-frontend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Frontend</a>
-          <a href="https://github.com/laminezlord/inventory-management-system-backend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Backend</a>
-        </div>
+        <div class="shot"><div class="frame"><div class="frame-bar"><span></span><span></span><span></span><em>stockpilot (local build)</em></div><img src="images/projects/stockpilot.jpg" alt="Screenshot of StockPilot: inventory management" loading="lazy" width="800" height="499"></div></div>
       </article>
-
       <article class="feat" id="p-autowave">
-        <span class="key" style="--c:#FFB627;--t:#14123A" aria-hidden="true"><i class="fas fa-car-side"></i></span>
-        <div>
+        <div class="feat-text">
+          <span class="key" style="--c:#FFB627;--t:#14123A" aria-hidden="true"><i class="fas fa-car-side"></i></span>
           <p class="feat-kind">Mobile app</p>
           <h3>AutoWave</h3>
           <p>A Flutter app for Android, iOS and web that connects drivers with nearby mechanics. Drivers search by budget, watch the mechanic arrive on a live map, and pay into an escrow wallet topped up through Paystack. It also handles car-part recycling pickups and includes an AI tutor in 11 languages.</p>
           <p class="stack"><b>Built with</b> Flutter, Dart, Supabase, Paystack, Gemini AI</p>
+          <div class="links"><button type="button" class="btn-preview" data-shots="images/projects/autowave-1.jpg|images/projects/autowave-2.jpg|images/projects/autowave-3.jpg" data-title="AutoWave"><i class="fas fa-expand" aria-hidden="true"></i> View screens</button><a href="https://github.com/laminezlord/autowave" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
         </div>
-        <div class="links">
-          <a href="https://github.com/laminezlord/autowave" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
-        </div>
+        <div class="shot"><div class="phones"><div class="phone p1"><img src="images/projects/autowave-1.jpg" alt="AutoWave screen 1" loading="lazy" width="360" height="779"></div><div class="phone p2"><img src="images/projects/autowave-2.jpg" alt="AutoWave screen 2" loading="lazy" width="360" height="779"></div><div class="phone p3"><img src="images/projects/autowave-3.jpg" alt="AutoWave screen 3" loading="lazy" width="360" height="779"></div></div></div>
       </article>
-
       <article class="feat" id="p-snapl">
-        <span class="key" style="--c:#2EC4A0;--t:#14123A" aria-hidden="true"><i class="fas fa-link"></i></span>
-        <div>
+        <div class="feat-text">
+          <span class="key" style="--c:#2EC4A0;--t:#14123A" aria-hidden="true"><i class="fas fa-link"></i></span>
           <p class="feat-kind">Full-stack web app</p>
           <h3>Snapl: URL shortener</h3>
           <p>Users create short links with custom or generated aliases, track clicks, and search and sort their links from a dashboard that changes with their role. Comes with a landing page, an in-app admin area, custom error pages and production security settings.</p>
           <p class="stack"><b>Built with</b> Python, Django, HTML, CSS</p>
+          <div class="links"><a href="https://github.com/laminezlord/url-shortner-backend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
         </div>
-        <div class="links">
-          <a href="https://github.com/laminezlord/url-shortner-backend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
-        </div>
+        <div class="shot"><div class="frame frame-empty"><div class="frame-bar"><span></span><span></span><span></span><em>snapl (local build)</em></div><div class="empty-body"><i class="fas fa-link" aria-hidden="true"></i><strong>Snapl</strong><span>Not deployed yet. The code and setup steps are on GitHub.</span></div></div></div>
       </article>
-
       <article class="feat" id="p-blog">
-        <span class="key" style="--c:#FF5E7E;--t:#14123A" aria-hidden="true"><i class="fas fa-pen-nib"></i></span>
-        <div>
+        <div class="feat-text">
+          <span class="key" style="--c:#FF5E7E;--t:#14123A" aria-hidden="true"><i class="fas fa-pen-nib"></i></span>
           <p class="feat-kind">React app</p>
           <h3>Cream Blog</h3>
           <p>A multi-user blogging platform. People sign up, write, edit and delete posts, browse a feed, and manage their own posts from a dashboard. Uses protected routes, context for login and theme, and a light and dark mode.</p>
           <p class="stack"><b>Built with</b> React, React Router, Tailwind CSS, Vite</p>
+          <div class="links"><button type="button" class="btn-preview" data-live="https://laminezlord.github.io/Blog-web/" data-title="Cream Blog"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://laminezlord.github.io/Blog-web/" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Open site</a><a href="https://github.com/laminezlord/Blog-web" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
         </div>
-        <div class="links">
-          <a href="https://blog-web-wheat-three.vercel.app" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live site</a>
-          <a href="https://github.com/laminezlord/Blog-web" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
-        </div>
+        <div class="shot"><div class="frame"><div class="frame-bar"><span></span><span></span><span></span><em>laminezlord.github.io/Blog-web</em></div><img src="images/projects/blog.jpg" alt="Screenshot of Cream Blog" loading="lazy" width="800" height="499"></div></div>
       </article>
-
       <article class="feat" id="p-vitalis">
-        <span class="key" style="--c:#B9A6FF;--t:#14123A" aria-hidden="true"><i class="fas fa-heart-pulse"></i></span>
-        <div>
+        <div class="feat-text">
+          <span class="key" style="--c:#B9A6FF;--t:#14123A" aria-hidden="true"><i class="fas fa-heart-pulse"></i></span>
           <p class="feat-kind">Prototype</p>
           <h3>Vitalis AI</h3>
           <p>A prototype for an AI healthcare assistant, with a landing page presenting its features, a how-it-works section, and sign-in and sign-up screens.</p>
           <p class="stack"><b>Built with</b> HTML, CSS, JavaScript</p>
+          <div class="links"><button type="button" class="btn-preview" data-live="https://laminezlord.github.io/Vitalis-AI-Prototype/" data-title="Vitalis AI"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://laminezlord.github.io/Vitalis-AI-Prototype/" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Open site</a><a href="https://github.com/laminezlord/Vitalis-AI-Prototype" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
         </div>
-        <div class="links">
-          <a href="https://laminezlord.github.io/Vitalis-AI-Prototype/" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live site</a>
-          <a href="https://github.com/laminezlord/Vitalis-AI-Prototype" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
-        </div>
+        <div class="shot"><div class="frame"><div class="frame-bar"><span></span><span></span><span></span><em>laminezlord.github.io/Vitalis-AI-Prototype</em></div><img src="images/projects/vitalis.jpg" alt="Screenshot of Vitalis AI" loading="lazy" width="800" height="499"></div></div>
       </article>
-
       <article class="feat" id="p-nexora">
-        <span class="key" style="--c:#3A2E8C;--t:#fff" aria-hidden="true"><i class="fas fa-globe"></i></span>
-        <div>
+        <div class="feat-text">
+          <span class="key" style="--c:#3A2E8C;--t:#fff" aria-hidden="true"><i class="fas fa-globe"></i></span>
           <p class="feat-kind">Business website</p>
           <h3>Nexora Digitals</h3>
           <p>The website for Nexora Digitals, a web design and development studio. It has browser and phone mockups in the hero, a services overview, a four-step process and a WhatsApp chat button so clients can start a project quickly.</p>
           <p class="stack"><b>Built with</b> HTML, CSS, JavaScript</p>
+          <div class="links"><button type="button" class="btn-preview" data-live="https://nexora-digitals-nine.vercel.app" data-title="Nexora Digitals"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://nexora-digitals-nine.vercel.app" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Open site</a><a href="https://github.com/laminezlord/Nexora-digitals" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a></div>
         </div>
-        <div class="links">
-          <a href="https://nexora-digitals-nine.vercel.app" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live site</a>
-          <a href="https://github.com/laminezlord/Nexora-digitals" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
-        </div>
+        <div class="shot"><div class="frame"><div class="frame-bar"><span></span><span></span><span></span><em>nexora-digitals-nine.vercel.app</em></div><img src="images/projects/nexora.jpg" alt="Screenshot of Nexora Digitals" loading="lazy" width="800" height="499"></div></div>
       </article>
     </div>
 
-    <div class="section-head" style="margin-top: 96px; margin-bottom: 24px;">
+    <div class="section-head" style="margin-top: 96px; margin-bottom: 28px;">
       <h2>More projects</h2>
     </div>
     <div class="more">
-      <div class="more-item" id="m-drehyalty">
+      <article class="more-item" id="m-drehyalty">
+        <button type="button" class="thumb" data-live="https://drehyalty-foods.vercel.app" data-title="Drehyalty Foods" aria-label="Preview Drehyalty Foods">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>drehyalty-foods.vercel.app</em></div><img src="images/projects/drehyalty.jpg" alt="Screenshot of Drehyalty Foods" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Drehyalty Foods</h3>
-        <div class="more-links"><a href="https://drehyalty-foods.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/drehyalty-foods" target="_blank" rel="noopener">Code</a></div>
         <p>Website for a Lagos food business selling homemade Nigerian soups, bowls and lunch packs, with a menu, reviews, opening hours and WhatsApp ordering.</p>
-      </div>
-      <div class="more-item" id="m-luxe">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://drehyalty-foods.vercel.app" data-title="Drehyalty Foods"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://drehyalty-foods.vercel.app" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/drehyalty-foods" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-luxe">
+        <button type="button" class="thumb" data-shots="images/projects/luxe.jpg" data-title="Luxe Haven Properties" aria-label="Preview Luxe Haven Properties">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>luxe (local build)</em></div><img src="images/projects/luxe.jpg" alt="Screenshot of Luxe Haven Properties" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Luxe Haven Properties</h3>
-        <div class="more-links"><a href="https://github.com/laminezlord/Lux_haven" target="_blank" rel="noopener">Code</a></div>
         <p>Real-estate website with property listings, support services and a contact section.</p>
-      </div>
-      <div class="more-item" id="m-goodlife">
+        <div class="more-links"><button type="button" class="btn-preview" data-shots="images/projects/luxe.jpg" data-title="Luxe Haven Properties"><i class="fas fa-expand" aria-hidden="true"></i> View screenshot</button><a href="https://github.com/laminezlord/Lux_haven" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-goodlife">
+        <button type="button" class="thumb" data-live="https://goodlifeoverseasolutionvercelapp.vercel.app" data-title="Goodlife Travel Agency" aria-label="Preview Goodlife Travel Agency">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>goodlifeoverseasolutionvercelapp.vercel.app</em></div><img src="images/projects/goodlife.jpg" alt="Screenshot of Goodlife Travel Agency" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Goodlife Travel Agency</h3>
-        <div class="more-links"><a href="https://goodlifeoverseasolutionvercelapp.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Travel-Agency" target="_blank" rel="noopener">Code</a></div>
         <p>Website for a Nigerian travel agency that specialises in Canada, listing its services and inviting visitors to get in touch.</p>
-      </div>
-      <div class="more-item" id="m-roamora">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://goodlifeoverseasolutionvercelapp.vercel.app" data-title="Goodlife Travel Agency"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://goodlifeoverseasolutionvercelapp.vercel.app" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/Travel-Agency" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-roamora">
+        <button type="button" class="thumb" data-live="https://roamora-travels.vercel.app" data-title="Roamora Travels" aria-label="Preview Roamora Travels">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>roamora-travels.vercel.app</em></div><img src="images/projects/roamora.jpg" alt="Screenshot of Roamora Travels" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Roamora Travels</h3>
-        <div class="more-links"><a href="https://roamora-travels.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Roamora_Travels" target="_blank" rel="noopener">Code</a></div>
         <p>Multi-page travel company website with Home, About, Services and Contact pages.</p>
-      </div>
-      <div class="more-item" id="m-booknest">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://roamora-travels.vercel.app" data-title="Roamora Travels"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://roamora-travels.vercel.app" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/Roamora_Travels" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-booknest">
+        <button type="button" class="thumb" data-live="https://book-web-theta.vercel.app" data-title="Book Nest" aria-label="Preview Book Nest">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>book-web-theta.vercel.app</em></div><img src="images/projects/booknest.jpg" alt="Screenshot of Book Nest" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Book Nest</h3>
-        <div class="more-links"><a href="https://book-web-theta.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Book_Web" target="_blank" rel="noopener">Code</a></div>
         <p>Book manager for keeping track of your reading list.</p>
-      </div>
-      <div class="more-item" id="m-youtube">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://book-web-theta.vercel.app" data-title="Book Nest"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://book-web-theta.vercel.app" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/Book_Web" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-youtube">
+        <button type="button" class="thumb" data-live="https://you-tube-chi-neon.vercel.app/" data-title="YouTube UI clone" aria-label="Preview YouTube UI clone">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>you-tube-chi-neon.vercel.app</em></div><img src="images/projects/youtube.jpg" alt="Screenshot of YouTube UI clone" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>YouTube UI clone</h3>
-        <div class="more-links"><a href="https://you-tube-chi-neon.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/YouTube" target="_blank" rel="noopener">Code</a></div>
         <p>Pixel-perfect YouTube homepage clone built in 3 days, with a responsive grid, hover states and mobile navigation.</p>
-      </div>
-      <div class="more-item" id="m-todo">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://you-tube-chi-neon.vercel.app/" data-title="YouTube UI clone"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://you-tube-chi-neon.vercel.app/" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/YouTube" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-todo">
+        <button type="button" class="thumb" data-live="https://to-do-delta-two.vercel.app/" data-title="To-do task manager" aria-label="Preview To-do task manager">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>to-do-delta-two.vercel.app</em></div><img src="images/projects/todo.jpg" alt="Screenshot of To-do task manager" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>To-do task manager</h3>
-        <div class="more-links"><a href="https://to-do-delta-two.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/To-Do" target="_blank" rel="noopener">Code</a></div>
         <p>Add, complete, filter and delete tasks, with completion tracking. Tasks are saved in local storage.</p>
-      </div>
-      <div class="more-item" id="m-aptech">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://to-do-delta-two.vercel.app/" data-title="To-do task manager"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://to-do-delta-two.vercel.app/" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/To-Do" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-aptech">
+        <button type="button" class="thumb" data-live="https://aptech-sandy.vercel.app/" data-title="Aptech institutional website" aria-label="Preview Aptech institutional website">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>aptech-sandy.vercel.app</em></div><img src="images/projects/aptech.jpg" alt="Screenshot of Aptech institutional website" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Aptech institutional website</h3>
-        <div class="more-links"><a href="https://aptech-sandy.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Aptech" target="_blank" rel="noopener">Code</a></div>
         <p>Multi-page class project with responsive navigation, course listings and a mobile-first design.</p>
-      </div>
-      <div class="more-item" id="m-form">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://aptech-sandy.vercel.app/" data-title="Aptech institutional website"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://aptech-sandy.vercel.app/" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/Aptech" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-form">
+        <button type="button" class="thumb" data-live="https://form-validation-zeta-navy.vercel.app" data-title="Smart form validation" aria-label="Preview Smart form validation">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>form-validation-zeta-navy.vercel.app</em></div><img src="images/projects/form.jpg" alt="Screenshot of Smart form validation" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Smart form validation</h3>
-        <div class="more-links"><a href="https://form-validation-zeta-navy.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Form-Validation" target="_blank" rel="noopener">Code</a></div>
         <p>Sign-up form that checks each field as you type and shows clear error and success messages.</p>
-      </div>
-      <div class="more-item" id="m-anime">
+        <div class="more-links"><button type="button" class="btn-preview" data-live="https://form-validation-zeta-navy.vercel.app" data-title="Smart form validation"><i class="fas fa-play" aria-hidden="true"></i> Preview live</button><a href="https://form-validation-zeta-navy.vercel.app" target="_blank" rel="noopener">Open site</a><a href="https://github.com/laminezlord/Form-Validation" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="more-item" id="m-anime">
+        <button type="button" class="thumb" data-shots="images/projects/anime.jpg" data-title="Anime streaming UI" aria-label="Preview Anime streaming UI">
+          <div class="frame frame-sm"><div class="frame-bar"><span></span><span></span><span></span><em>anime (local build)</em></div><img src="images/projects/anime.jpg" alt="Screenshot of Anime streaming UI" loading="lazy" width="800" height="499"></div>
+        </button>
         <h3>Anime streaming UI</h3>
-        <div class="more-links"><a href="https://github.com/laminezlord/animepahe" target="_blank" rel="noopener">Code</a></div>
         <p>Front-end recreation of an anime streaming site, with a poster grid of the latest releases and several linked pages.</p>
-      </div>
+        <div class="more-links"><button type="button" class="btn-preview" data-shots="images/projects/anime.jpg" data-title="Anime streaming UI"><i class="fas fa-expand" aria-hidden="true"></i> View screenshot</button><a href="https://github.com/laminezlord/animepahe" target="_blank" rel="noopener">Code</a></div>
+      </article>
     </div>
 
     <div class="practice">
@@ -639,6 +739,20 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </div>
   </section>
 </main>
+
+<dialog class="pv" id="pv" aria-label="Project preview">
+  <div class="pv-win" id="pvWin">
+    <div class="pv-bar">
+      <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="pv-title" id="pvTitle"></span>
+      <button type="button" id="pvDesk" aria-pressed="true" aria-label="Desktop size" title="Desktop size"><i class="fas fa-desktop" aria-hidden="true"></i></button>
+      <button type="button" id="pvPhone" aria-pressed="false" aria-label="Phone size" title="Phone size"><i class="fas fa-mobile-screen" aria-hidden="true"></i></button>
+      <a id="pvOpen" href="#" target="_blank" rel="noopener" title="Open in a new tab"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i><span class="hide-sm" style="margin-left:6px">New tab</span></a>
+      <button type="button" id="pvClose" aria-label="Close preview" title="Close"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+    </div>
+    <div class="pv-body" id="pvBody"></div>
+  </div>
+</dialog>
 
 <footer>
   <div class="wrap">
@@ -1090,6 +1204,67 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       document.fonts.load('500 36px "JetBrains Mono"'),
     ]).then(go, go);
   } else go();
+})();
+
+/* ---------- Project preview window ---------- */
+(function () {
+  const dlg = document.getElementById('pv');
+  if (!dlg || !dlg.showModal) return;
+  const win = document.getElementById('pvWin');
+  const body = document.getElementById('pvBody');
+  const title = document.getElementById('pvTitle');
+  const openLink = document.getElementById('pvOpen');
+  const desk = document.getElementById('pvDesk');
+  const phone = document.getElementById('pvPhone');
+  let lastFocus = null;
+
+  function setSize(isPhone) {
+    win.classList.toggle('is-phone', isPhone);
+    desk.setAttribute('aria-pressed', String(!isPhone));
+    phone.setAttribute('aria-pressed', String(isPhone));
+  }
+  function show(el) {
+    lastFocus = el;
+    const live = el.dataset.live;
+    const name = el.dataset.title;
+    body.innerHTML = '';
+    body.className = 'pv-body';
+    if (live) {
+      title.textContent = live.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      openLink.href = live; openLink.hidden = false;
+      desk.hidden = phone.hidden = false;
+      setSize(window.innerWidth < 640);
+      const load = document.createElement('div');
+      load.className = 'pv-load'; load.textContent = 'Loading ' + name + '…';
+      const f = document.createElement('iframe');
+      f.src = live; f.title = name + ' live preview';
+      f.addEventListener('load', () => load.remove());
+      body.append(load, f);
+    } else {
+      const shots = (el.dataset.shots || '').split('|').filter(Boolean);
+      title.textContent = name;
+      openLink.hidden = true;
+      desk.hidden = phone.hidden = true;
+      setSize(false);
+      body.classList.add('gallery');
+      if (shots.some((s) => s.includes('autowave'))) body.classList.add('phones-g');
+      shots.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src; img.alt = name + ' screenshot ' + (i + 1);
+        body.append(img);
+      });
+    }
+    dlg.showModal();
+  }
+  function close() { dlg.close(); }
+  dlg.addEventListener('close', () => { body.innerHTML = ''; if (lastFocus) lastFocus.focus({ preventScroll: true }); });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+  document.getElementById('pvClose').addEventListener('click', close);
+  desk.addEventListener('click', () => setSize(false));
+  phone.addEventListener('click', () => setSize(true));
+  document.querySelectorAll('[data-live], [data-shots]').forEach((el) => {
+    el.addEventListener('click', () => show(el));
+  });
 })();
 
 /* ---------- 3D tilt on featured projects ---------- */
