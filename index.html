@@ -1,1182 +1,1122 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laminez | ADSE Student & Software Developer</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/x-icon" href="images/icon.png">
+<title>Laminez | Software Developer in Lagos</title>
+<meta name="description" content="Laminez is an ADSE student and software developer in Lagos building web apps, APIs and mobile apps.">
+<link rel="icon" type="image/png" href="images/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+  // Apply the saved theme before first paint so the page doesn't flash.
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <style>
-  :root {
-  --bg: #f5f3ee;
-  --bg2: #eceae3;
-  --surface: #ffffff;
-  --text: #1a1a1a;
-  --text2: #555;
-  --accent: #1a3cff;
-  --accent2: #ff4d1c;
-  --border: #dddbd4;
-  --shadow: rgba(0,0,0,0.07);
-  --nav-bg: rgba(245,243,238,0.95);
+:root {
+  --paper: #EEF0F8;
+  --paper-2: #E2E5F2;
+  --surface: #FFFFFF;
+  --ink: #14123A;
+  --ink-2: #4C4A6E;
+  --line: #D3D6E6;
+  --cobalt: #2F4BFF;
+  --marigold: #FFB627;
+  --mint: #2EC4A0;
+  --rose: #FF5E7E;
+  --lilac: #B9A6FF;
+  --violet: #3A2E8C;
+  --focus: #2F4BFF;
+  --nav-bg: rgba(238, 240, 248, 0.82);
+  --ext-1: #2F4BFF; --ext-2: #2539C9; --ext-3: #1A2994; --ext-shadow: rgba(20, 18, 58, 0.25);
+
+  --display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --body: 'Figtree', system-ui, sans-serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2rem, 4.5vw, 3rem);
+  --step-4: clamp(3.5rem, 11vw, 8.5rem);
 }
-[data-theme="dark"] {
-  --bg: #0f0f0f;
-  --bg2: #181818;
-  --surface: #1e1e1e;
-  --text: #f0ede6;
-  --text2: #999;
-  --accent: #4d6fff;
-  --accent2: #ff6b40;
-  --border: #2a2a2a;
-  --shadow: rgba(0,0,0,0.3);
-  --nav-bg: rgba(15,15,15,0.95);
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E0D26;
+    --paper-2: #17163A;
+    --surface: #1C1B44;
+    --ink: #E9E8FF;
+    --ink-2: #A9A7CF;
+    --line: #2C2B5A;
+    --cobalt: #6F84FF;
+    --focus: #8FA0FF;
+    --nav-bg: rgba(14, 13, 38, 0.82);
+    --ext-1: #6F84FF; --ext-2: #4B5FE0; --ext-3: #3343B0; --ext-shadow: rgba(0, 0, 0, 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E0D26;
+  --paper-2: #17163A;
+  --surface: #1C1B44;
+  --ink: #E9E8FF;
+  --ink-2: #A9A7CF;
+  --line: #2C2B5A;
+  --cobalt: #6F84FF;
+  --focus: #8FA0FF;
+  --nav-bg: rgba(14, 13, 38, 0.82);
+  --ext-1: #6F84FF; --ext-2: #4B5FE0; --ext-3: #3343B0; --ext-shadow: rgba(0, 0, 0, 0.5);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--body);
+  font-size: var(--step-0);
   line-height: 1.6;
-  transition: background 0.3s, color 0.3s;
-  padding-top: 60px;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-a { text-decoration: none; color: inherit; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
 
-/* NAVBAR */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+.wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+/* NAV */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
   background: var(--nav-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  transition: background 0.3s;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
-.nav-logo {
-  font-family: 'Syne', sans-serif;
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.logo {
+  font-family: var(--display);
   font-weight: 800;
-  font-size: 20px;
-  letter-spacing: -0.5px;
-  z-index: 1001;
+  font-size: 1.375rem;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
 }
-.nav-links { 
-  display: flex; 
-  gap: 32px; 
-  align-items: center; 
-}
+.nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text2);
+  text-decoration: none; font-weight: 500; font-size: 0.9375rem; color: var(--ink-2);
   transition: color 0.2s;
-  position: relative;
-  padding: 5px 0;
 }
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.25s;
+.nav-links a:hover { color: var(--ink); }
+.theme-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  cursor: pointer; font-size: 0.9375rem;
+  display: grid; place-items: center;
 }
-.nav-links a:hover { color: var(--text); }
-.nav-links a:hover::after { width: 100%; }
-.nav-links a.active { color: var(--accent); }
-.nav-links a.active::after { width: 100%; }
-
-#theme-toggle {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-#theme-toggle:hover { background: var(--border); }
-
-.mobile-menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--text);
-  font-size: 20px;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 1001;
-}
-
-.container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
 
 /* HERO */
 .hero {
-  padding: 60px 0 80px;
+  min-height: 100svh;
+  padding-top: 64px;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 60px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: center;
-  opacity: 0;
-  transform: translateY(24px);
-  animation: fadeUp 0.7s 0.1s forwards;
+  gap: 24px;
 }
-@keyframes fadeUp {
-  to { opacity: 1; transform: none; }
-}
-.hero-text { max-width: 600px; }
-
+.hero-text { padding-block: 48px; }
 .hero h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(36px, 6vw, 72px);
+  font-family: var(--display);
+  font-size: var(--step-4);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -2px;
-  margin-bottom: 12px;
+  font-variation-settings: "wdth" 80;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  margin-bottom: 36px;
+  color: var(--ink);
+  text-shadow:
+    1px 1px 0 var(--ext-1), 2px 2px 0 var(--ext-1), 3px 3px 0 var(--ext-2), 4px 4px 0 var(--ext-2),
+    5px 5px 0 var(--ext-2), 6px 6px 0 var(--ext-3), 7px 7px 0 var(--ext-3), 8px 8px 0 var(--ext-3),
+    14px 18px 24px var(--ext-shadow);
 }
-.hero h1 span { color: var(--accent); }
-
-.hero h3 {
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--text2);
-  margin-bottom: 20px;
+.hero-lede {
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 30ch;
+  margin-bottom: 16px;
 }
-
-.hero p {
-  font-size: 16px;
-  color: var(--text2);
-  max-width: 480px;
-  margin-bottom: 24px;
-  line-height: 1.75;
-}
-
-.hero-badges {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.hero-sub { color: var(--ink-2); max-width: 46ch; margin-bottom: 32px; }
+.avail {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: var(--step--1); font-weight: 500; color: var(--ink-2);
   margin-bottom: 28px;
 }
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 99px;
-  padding: 6px 14px 6px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text2);
-}
-.status-dot {
-  width: 8px; height: 8px;
-  background: #22c55e;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
+.avail img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--surface); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px color-mix(in srgb, var(--mint) 25%, transparent); }
 
-.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px; border-radius: 12px;
+  font: 600 0.9375rem var(--body); text-decoration: none;
+  border: 1.5px solid transparent; cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-main {
+  background: var(--cobalt); color: #fff;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--cobalt) 55%, #000);
+}
+.btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 0 color-mix(in srgb, var(--cobalt) 55%, #000); }
+.btn-main:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--cobalt) 55%, #000); }
+.btn-ghost { border-color: var(--line); background: var(--surface); }
+.btn-ghost:hover { border-color: var(--ink-2); }
+
+.stage { position: relative; height: min(88svh, 760px); }
+#scene { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+#scene.dragging { cursor: grabbing; }
+#scene.pointing { cursor: pointer; }
+.stage-hint {
+  position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%);
+  font-size: 0.8125rem; color: var(--ink-2); white-space: nowrap;
+  pointer-events: none;
+}
+.tip {
+  position: absolute; pointer-events: none;
+  background: var(--ink); color: var(--paper);
+  font: 600 0.8125rem var(--body);
+  padding: 6px 10px; border-radius: 8px;
+  transform: translate(-50%, calc(-100% - 14px));
+  opacity: 0; transition: opacity 0.15s;
   white-space: nowrap;
 }
-.btn-primary {
-  background: var(--accent);
-  color: white;
-}
-.btn-primary:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26, 60, 255, 0.3); }
-.btn-outline {
-  background: transparent;
-  color: var(--text);
-  border: 1.5px solid var(--border);
-}
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.tip.show { opacity: 1; }
+.no-webgl #scene, .no-webgl .stage-hint { display: none; }
+.no-webgl .stage { height: auto; }
 
-.social-links { display: flex; gap: 16px; flex-wrap: wrap; }
-.social-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text2);
-  transition: all 0.2s;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background: var(--bg2);
+/* SECTIONS */
+.section { padding-block: clamp(72px, 10vw, 128px); }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+.section h2 {
+  font-family: var(--display);
+  font-size: var(--step-3);
+  font-weight: 800;
+  font-variation-settings: "wdth" 85;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
-.social-links a:hover { color: var(--accent); background: var(--surface); }
+.section-note { color: var(--ink-2); max-width: 40ch; }
 
-/* CIRCULAR IMAGE - NO RING */
-.hero-img-wrap {
-  position: relative;
+/* Keycap used as project marker */
+.key {
+  --c: var(--cobalt); --t: #fff;
+  width: 60px; height: 60px; border-radius: 14px;
+  display: grid; place-items: center;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 82%, #fff), var(--c) 55%);
+  color: var(--t); font-size: 22px;
+  box-shadow:
+    inset 0 -3px 0 color-mix(in srgb, var(--c) 80%, #000),
+    0 6px 0 color-mix(in srgb, var(--c) 55%, #000),
+    0 12px 20px -6px rgba(10, 8, 40, 0.45);
+  transform: translateY(-4px);
+  transition: transform 0.12s, box-shadow 0.12s;
   flex-shrink: 0;
-  justify-self: center;
 }
-.hero img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  border: 4px solid var(--border);
-  display: block;
-  box-shadow: 0 20px 40px var(--shadow);
-  transition: all 0.3s ease;
+.feat:hover .key, .feat:focus-within .key {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 -2px 0 color-mix(in srgb, var(--c) 80%, #000),
+    0 0 0 color-mix(in srgb, var(--c) 55%, #000),
+    0 4px 10px -4px rgba(10, 8, 40, 0.45);
 }
-.hero img:hover {
-  transform: scale(1.05);
-  border-color: var(--accent);
-  box-shadow: 0 25px 50px rgba(26, 60, 255, 0.2);
-}
+.key-sm { width: 28px; height: 28px; border-radius: 8px; font-size: 12px; transform: translateY(-2px);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--c) 80%, #000), 0 3px 0 color-mix(in srgb, var(--c) 55%, #000); }
 
-/* SECTION */
-.section {
-  padding: 80px 0;
-  border-top: 1px solid var(--border);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s, transform 0.6s;
+/* FEATURED */
+.featured { display: grid; gap: 16px; }
+.feat {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr) auto;
+  gap: 8px 28px;
+  align-items: start;
+  padding: 32px;
+  background: var(--surface);
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  position: relative;
 }
-.section.visible { opacity: 1; transform: none; }
-.section-label {
-  font-size: 12px;
+.feat-kind { font-size: var(--step--1); color: var(--ink-2); font-weight: 500; margin-bottom: 4px; }
+.feat h3 {
+  font-family: var(--display);
+  font-size: var(--step-2);
   font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   margin-bottom: 12px;
 }
-.section h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(28px, 4vw, 36px);
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 40px;
+.feat p { color: var(--ink-2); max-width: 64ch; margin-bottom: 16px; }
+.stack { font-size: var(--step--1); color: var(--ink-2); }
+.stack b { color: var(--ink); font-weight: 600; }
+.links { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+.links a {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  padding: 10px 16px; border-radius: 10px;
+  font-weight: 600; font-size: 0.875rem; text-decoration: none;
+  background: var(--paper-2); white-space: nowrap;
 }
+.links a:hover { background: var(--ink); color: var(--paper); }
+.feat.flash, .more-item.flash { animation: flash 1.2s ease-out; }
+.more-item { border-radius: 4px; }
 
-/* SKILLS - 3 CARDS */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 24px;
+/* 3D tilt (pointer devices only; set from JS) */
+.featured { perspective: 1400px; }
+.feat {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease-out, box-shadow 0.25s;
 }
-.skill-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px;
-  transition: all 0.3s ease;
+.feat::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), color-mix(in srgb, var(--cobalt) 10%, transparent), transparent 70%);
+  opacity: 0; transition: opacity 0.25s;
 }
-.skill-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px var(--shadow);
-}
-.skill-card-icon {
-  width: 48px; height: 48px;
-  border-radius: 12px;
-  background: var(--bg2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-  margin-bottom: 18px;
-  color: var(--accent);
-}
-.skill-card h4 {
-  font-family: 'Syne', sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  letter-spacing: -0.2px;
-}
-.tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag {
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 99px;
-  background: var(--bg2);
-  color: var(--text2);
-  border: 1px solid var(--border);
-}
+.feat:hover { box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 35%, transparent); }
+.feat:hover::before { opacity: 1; }
+.feat > .key { transform: translateZ(50px) translateY(-4px); }
+.feat:hover > .key { transform: translateZ(50px) translateY(2px); }
+.feat > div { transform: translateZ(24px); transform-style: preserve-3d; }
+.feat > .links { transform: translateZ(36px); }
+@keyframes flash { 0% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--cobalt) 45%, transparent); } 100% { box-shadow: 0 0 0 0 transparent; } }
 
-/* PROJECTS */
-.projects-grid { display: grid; gap: 20px; }
-.project-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  transition: all 0.3s ease;
+/* MORE PROJECTS */
+.more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.more-item {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px;
+  padding-block: 20px; border-top: 1px solid var(--line);
 }
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px var(--shadow);
-}
-.project-icon {
-  width: 56px; height: 56px;
-  border-radius: 14px;
-  background: var(--bg2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px;
-  flex-shrink: 0;
-  border: 2px solid var(--border);
-}
-.project-info { flex: 1; }
-.project-info h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.project-info p {
-  font-size: 15px;
-  color: var(--text2);
-  margin-bottom: 18px;
-  line-height: 1.7;
-}
-.project-footer { 
-  display: flex; 
-  align-items: center; 
-  justify-content: space-between;
-  gap: 16px; 
-  flex-wrap: wrap; 
-}
-.project-links { display: flex; gap: 16px; }
-.project-links a {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  display: flex; align-items: center; gap: 6px;
-  transition: all 0.2s;
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: var(--bg2);
-}
-.project-links a:hover { background: var(--accent); color: white; }
+.more-item h3 { font-family: var(--display); font-size: var(--step-1); font-weight: 700; letter-spacing: -0.01em; }
+.more-item p { grid-column: 1 / -1; color: var(--ink-2); font-size: 0.9375rem; max-width: 52ch; }
+.more-links { display: flex; gap: 14px; align-items: center; }
+.more-links a { font-size: 0.875rem; font-weight: 600; color: var(--cobalt); text-decoration: none; }
+.more-links a:hover { text-decoration: underline; }
 
-.project-badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--accent2);
-  margin-bottom: 6px;
+.practice { margin-top: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.practice span { color: var(--ink-2); margin-right: 4px; }
+.practice a {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 99px;
+  border: 1px solid var(--line); background: var(--surface);
+  font-size: 0.875rem; font-weight: 500; text-decoration: none;
 }
+.practice a:hover { border-color: var(--cobalt); color: var(--cobalt); }
 
-/* MORE PROJECTS - COMPACT GRID */
-.subsection-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  margin: 56px 0 24px;
-}
-.mini-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-.mini-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: all 0.3s ease;
-}
-.mini-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px var(--shadow);
-}
-.mini-card-head { display: flex; align-items: center; gap: 12px; }
-.mini-card-head .project-icon { width: 42px; height: 42px; font-size: 18px; border-radius: 10px; }
-.mini-card h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-}
-.mini-card p { font-size: 14px; color: var(--text2); line-height: 1.6; flex: 1; }
-.mini-card .project-links { gap: 10px; }
-.mini-card .project-links a { padding: 6px 12px; font-size: 12px; }
-
-.practice-links { display: flex; flex-wrap: wrap; gap: 10px; }
-.practice-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 16px;
-  border-radius: 99px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  transition: all 0.2s;
-}
-.practice-links a:hover { border-color: var(--accent); color: var(--accent); }
+/* SKILLS */
+.skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.skills h3 { font-family: var(--display); font-size: var(--step-1); font-weight: 700; margin-bottom: 14px; }
+.skills ul { list-style: none; display: grid; gap: 6px; color: var(--ink-2); }
 
 /* CONTACT */
-.contact-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: start;
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+.contact-big {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  text-decoration: none; display: inline-block;
+  border-bottom: 3px solid var(--cobalt);
+  margin: 8px 0 28px;
+  word-break: break-all;
 }
-.contact-info p {
-  font-size: 16px;
-  color: var(--text2);
-  line-height: 1.8;
-  margin-bottom: 32px;
+.contact-big:hover { color: var(--cobalt); }
+.contact p { color: var(--ink-2); max-width: 44ch; }
+.socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.socials a, .socials span {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line);
+  font-size: 0.9375rem; font-weight: 500; text-decoration: none;
 }
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.contact-detail {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 20px;
-  border-radius: 12px;
-  font-size: 15px;
-  color: var(--text2);
-  transition: all 0.2s;
-}
-.contact-detail:hover {
-  background: var(--bg2);
-  color: var(--text);
-}
-.contact-detail i { 
-  color: var(--accent); 
-  width: 20px; 
-  font-size: 18px;
-  text-align: center;
-}
-.contact-detail a { color: inherit; font-weight: 500; }
+.socials a:hover { border-color: var(--ink-2); }
 
-form {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 10px 30px var(--shadow);
+form { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: grid; gap: 18px; }
+label { display: grid; gap: 6px; font-size: var(--step--1); font-weight: 600; }
+input, textarea {
+  font: inherit; font-weight: 400; font-size: 1rem; color: var(--ink);
+  padding: 12px 14px; border-radius: 10px;
+  border: 1.5px solid var(--line); background: var(--paper);
 }
-.form-group { margin-bottom: 20px; }
-.form-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text2);
-  margin-bottom: 8px;
-}
-form input, form textarea {
-  width: 100%;
-  padding: 14px 16px;
-  background: var(--bg);
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  font-size: 15px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s;
-}
-form input:focus, form textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--surface);
-}
-form textarea { resize: vertical; min-height: 140px; }
-form button {
-  width: 100%;
-  padding: 16px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  font-family: 'DM Sans', sans-serif;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-form button:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26, 60, 255, 0.3); }
-#formMessage {
-  font-size: 14px;
-  margin-top: 16px;
-  text-align: center;
-  font-weight: 600;
-}
+input:focus, textarea:focus { outline: none; border-color: var(--cobalt); }
+textarea { min-height: 140px; resize: vertical; }
+form .btn { justify-content: center; }
+#formMessage { font-size: var(--step--1); font-weight: 600; min-height: 1.2em; }
 
-/* FOOTER */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 40px 0;
-  text-align: center;
-  font-size: 14px;
-  color: var(--text2);
-  background: var(--bg2);
-}
-footer a { color: var(--accent); font-weight: 500; }
-footer a:hover { text-decoration: underline; }
+footer { padding-block: 40px; color: var(--ink-2); font-size: var(--step--1); border-top: 1px solid var(--line); }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
 /* RESPONSIVE */
-@media (max-width: 1024px) {
-  .container { padding: 0 20px; }
-  .hero { gap: 40px; }
-  .hero img { width: 180px; height: 180px; }
-  .contact-wrap { gap: 40px; }
+@media (max-width: 960px) {
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .more { grid-template-columns: 1fr; }
 }
-
-@media (max-width: 768px) {
-  body { padding-top: 60px; }
-  
-  .mobile-menu-btn { display: block; }
-  
-  .nav-links { 
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background: var(--nav-bg);
-    backdrop-filter: blur(12px);
-    flex-direction: column;
-    padding: 24px;
-    gap: 20px;
-    border-bottom: 1px solid var(--border);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-links.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .nav-links a {
-    font-size: 16px;
-    padding: 12px 0;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .nav-links a::after { display: none; }
-  
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 40px 0 60px;
-    gap: 40px;
-    text-align: center;
-  }
-  
-  .hero-text { margin: 0 auto; }
-  .hero-badges { justify-content: center; }
-  .hero-buttons { justify-content: center; }
-  .social-links { justify-content: center; }
-  .hero-img-wrap { order: -1; }
-  .hero img { width: 160px; height: 160px; }
-  
-  .section { padding: 60px 0; }
-  .section h2 { margin-bottom: 32px; }
-  
-  .project-card { 
-    flex-direction: column; 
-    padding: 24px;
-    text-align: center;
-  }
-  .project-icon { margin: 0 auto; }
-  .project-footer { 
-    flex-direction: column; 
-    align-items: center;
-  }
-  .project-links { margin-left: 0; flex-wrap: wrap; justify-content: center; }
-  .mini-card { text-align: left; }
-  .mini-card-head .project-icon { margin: 0; }
-  .mini-card .project-links { justify-content: flex-start; }
-  .subsection-title { margin-top: 44px; }
-
-  .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
-  .contact-detail { padding: 12px 16px; }
-  form { padding: 24px; }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; gap: 0; padding-top: 72px; }
+  .stage { order: -1; height: 60svh; min-height: 360px; margin-right: 0; }
+  .stage-hint { white-space: normal; width: 90%; text-align: center; }
+  .hero-text { padding-block: 8px 48px; }
+  .contact { grid-template-columns: 1fr; gap: 40px; }
 }
-
-@media (max-width: 480px) {
-  .hero h1 { font-size: 32px; }
-  .hero h3 { font-size: 16px; }
-  .btn { width: 100%; }
-  .hero-buttons { flex-direction: column; }
-  .social-links a { flex: 1; justify-content: center; }
-  .skill-card { padding: 20px; }
-  .project-card { padding: 20px; }
-  .hero img { width: 140px; height: 140px; }
+@media (max-width: 640px) {
+  .nav-links { gap: 16px; }
+  .nav-links a { font-size: 0.875rem; }
+  .feat { grid-template-columns: 1fr; padding: 24px; }
+  .key { width: 50px; height: 50px; font-size: 19px; }
+  .links { flex-direction: row; flex-wrap: wrap; }
+  .skills { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .more-item { grid-template-columns: 1fr; }
+  .more-links { order: 3; }
 }
-
-@media (max-width: 360px) {
-  .hero-img-wrap { display: none; }
+@media (max-width: 420px) {
+  .nav-links .hide-xs { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .key, .btn { transition: none; }
+  .feat.flash { animation: none; }
 }
 </style>
 </head>
 <body>
 
-<nav id="navbar">
-  <a href="#home" class="nav-logo">Laminez</a>
-  
-  <button class="mobile-menu-btn" id="mobileMenuBtn">
-    <i class="fas fa-bars"></i>
-  </button>
-  
-  <div class="nav-links" id="navLinks">
-    <a href="#home" class="nav-link">Home</a>
-    <a href="#skills" class="nav-link">Skills</a>
-    <a href="#projects" class="nav-link">Projects</a>
-    <a href="#contact" class="nav-link">Contact</a>
-    <button id="theme-toggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="Laminez, back to top">
+      <span class="key key-sm" aria-hidden="true"><i class="fas fa-code"></i></span>
+      Laminez
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#projects">Projects</a>
+      <a href="#skills" class="hide-xs">Skills</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i></button>
+    </nav>
   </div>
-</nav>
+</header>
 
-<div class="container">
-
-  <!-- HERO -->
-  <section class="hero" id="home">
+<main id="top">
+  <section class="wrap hero">
     <div class="hero-text">
-      <h1>Lami<span>nez</span></h1>
-      <h3>ADSE Student · Software Developer</h3>
-      <p>ADSE student at Aptech with strong foundations in Python, JavaScript, C, Java, and SQL. Passionate about building responsive web applications and exploring modern frameworks.</p>
-      
-      <div class="hero-badges">
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          Available for Internship
-        </div>
-        <div class="status-badge">
-          <i class="fas fa-location-dot" style="color: var(--accent);"></i>
-          Lagos, Nigeria
-        </div>
+      <div class="avail">
+        <img src="images/unnamed.jpg" alt="" width="36" height="36">
+        <span class="dot" aria-hidden="true"></span>
+        Based in Lagos, open to internships
       </div>
-      
-      <div class="hero-buttons">
-        <a href="#projects" class="btn btn-primary"><i class="fas fa-folder-open"></i> View Projects</a>
-        <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Hire Me</a>
-      </div>
-      
-      <div class="social-links">
-        <a href="https://github.com/laminezlord" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="https://linkedin.com/in/laminezlord" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="mailto:laminezlord27@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+      <h1>Laminez</h1>
+      <p class="hero-lede">I build web apps, APIs and mobile apps, from first commit to deployed.</p>
+      <p class="hero-sub">ADSE student at Aptech. Lately I've shipped a full-stack inventory system in Django and React, and a Flutter app that connects drivers with nearby mechanics.</p>
+      <div class="actions">
+        <a href="#projects" class="btn btn-main"><i class="fas fa-folder-open" aria-hidden="true"></i> See my projects</a>
+        <a href="mailto:laminezlord27@gmail.com" class="btn btn-ghost"><i class="fas fa-envelope" aria-hidden="true"></i> Email me</a>
       </div>
     </div>
-    
-    <!-- CIRCULAR IMAGE - NO RING -->
-    <div class="hero-img-wrap">
-      <img src="images/unnamed.jpg" alt="Laminez" onerror="this.src='https://via.placeholder.com/220x220/667eea/ffffff?text=L'">
+
+    <div class="stage" id="stage">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <div class="tip" id="tip"></div>
+      <p class="stage-hint">Drag to turn the laptop. Click the screen to see my projects.</p>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="section" id="skills">
-    <div class="section-label">My Expertise</div>
-    <h2>Skills & Technologies</h2>
-    
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-card-icon"><i class="fas fa-code"></i></div>
-        <h4>Programming Languages</h4>
-        <div class="tag-list">
-          <span class="tag">Python</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">C</span>
-          <span class="tag">Java</span>
-          <span class="tag">Dart</span>
-          <span class="tag">SQL</span>
-        </div>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-card-icon"><i class="fas fa-server"></i></div>
-        <h4>Backend & Mobile</h4>
-        <div class="tag-list">
-          <span class="tag">Django</span>
-          <span class="tag">Django REST Framework</span>
-          <span class="tag">JWT Auth</span>
-          <span class="tag">Flutter</span>
-          <span class="tag">Supabase</span>
-          <span class="tag">REST APIs</span>
-        </div>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-card-icon"><i class="fas fa-laptop-code"></i></div>
-        <h4>Frontend Development</h4>
-        <div class="tag-list">
-          <span class="tag">HTML5</span>
-          <span class="tag">CSS3</span>
-          <span class="tag">React</span>
-          <span class="tag">Tailwind CSS</span>
-          <span class="tag">Vite</span>
-          <span class="tag">Responsive Design</span>
-          <span class="tag">UI/UX Design</span>
-        </div>
-      </div>
-      
-      <div class="skill-card">
-        <div class="skill-card-icon"><i class="fas fa-tools"></i></div>
-        <h4>Tools & Platforms</h4>
-        <div class="tag-list">
-          <span class="tag">Git & GitHub</span>
-          <span class="tag">VS Code</span>
-          <span class="tag">Vercel</span>
-          <span class="tag">Figma</span>
-        </div>
-      </div>
+  <section class="section wrap" id="projects">
+    <div class="section-head">
+      <h2>Things I've built</h2>
+      <p class="section-note">The six I'm proudest of, then everything else I've shipped.</p>
     </div>
-  </section>
 
-  <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <div class="section-label">What I've built</div>
-    <h2>Featured Projects</h2>
-    <div class="projects-grid">
-
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-boxes-stacked" style="color: #0d9488;"></i></div>
-        <div class="project-info">
-          <span class="project-badge">Full-stack</span>
-          <h3>StockPilot: Inventory Management System</h3>
-          <p>A full-stack inventory platform with a Django REST API and a React dashboard. Manages products, categories, suppliers, customers and orders, deducts stock automatically when an order is placed, logs every stock movement, and includes sales, revenue and low-stock reports. JWT login with token refresh, and admin and staff roles enforced on the server.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">Django REST Framework</span>
-              <span class="tag">React</span>
-              <span class="tag">Tailwind CSS</span>
-              <span class="tag">JWT</span>
-              <span class="tag">Recharts</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/inventory-management-system-frontend" target="_blank"><i class="fab fa-github"></i> Frontend</a>
-              <a href="https://github.com/laminezlord/inventory-management-system-backend" target="_blank"><i class="fab fa-github"></i> Backend</a>
-            </div>
-          </div>
+    <div class="featured">
+      <article class="feat" id="p-stockpilot">
+        <span class="key" style="--c:#2F4BFF;--t:#fff" aria-hidden="true"><i class="fas fa-boxes-stacked"></i></span>
+        <div>
+          <p class="feat-kind">Full-stack web app</p>
+          <h3>StockPilot: inventory management</h3>
+          <p>Manages products, categories, suppliers, customers and orders. Placing an order deducts stock automatically and logs the movement, and admins get sales, revenue and low-stock reports. JWT login with token refresh, with admin and staff roles enforced on the server.</p>
+          <p class="stack"><b>Built with</b> Django REST Framework, React, Tailwind CSS, JWT, Recharts</p>
         </div>
-      </div>
+        <div class="links">
+          <a href="https://github.com/laminezlord/inventory-management-system-frontend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Frontend</a>
+          <a href="https://github.com/laminezlord/inventory-management-system-backend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Backend</a>
+        </div>
+      </article>
 
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-car-side" style="color: #f59e0b;"></i></div>
-        <div class="project-info">
-          <span class="project-badge">Mobile app</span>
+      <article class="feat" id="p-autowave">
+        <span class="key" style="--c:#FFB627;--t:#14123A" aria-hidden="true"><i class="fas fa-car-side"></i></span>
+        <div>
+          <p class="feat-kind">Mobile app</p>
           <h3>AutoWave</h3>
-          <p>A Flutter app for Android, iOS and web that connects drivers with nearby mechanics. Drivers search by budget, track the mechanic live on a map, and pay into an escrow wallet funded through Paystack. It also has car-part recycling pickups and AutoLearn, an AI tutor powered by Gemini that works in 11 languages.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">Flutter</span>
-              <span class="tag">Dart</span>
-              <span class="tag">Supabase</span>
-              <span class="tag">Paystack</span>
-              <span class="tag">Gemini AI</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/autowave" target="_blank"><i class="fab fa-github"></i> Code</a>
-            </div>
-          </div>
+          <p>A Flutter app for Android, iOS and web that connects drivers with nearby mechanics. Drivers search by budget, watch the mechanic arrive on a live map, and pay into an escrow wallet topped up through Paystack. It also handles car-part recycling pickups and includes an AI tutor in 11 languages.</p>
+          <p class="stack"><b>Built with</b> Flutter, Dart, Supabase, Paystack, Gemini AI</p>
         </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-link" style="color: var(--accent);"></i></div>
-        <div class="project-info">
-          <span class="project-badge">Full-stack</span>
-          <h3>Snapl: URL Shortener</h3>
-          <p>A Django URL shortener with user accounts, custom or auto-generated aliases, click tracking, search and filtering, and a dashboard that adapts to the user's role. Includes a marketing landing page, an in-app admin area, custom error pages, and security settings ready for production.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">Python</span>
-              <span class="tag">Django</span>
-              <span class="tag">HTML/CSS</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/url-shortner-backend" target="_blank"><i class="fab fa-github"></i> Code</a>
-            </div>
-          </div>
+        <div class="links">
+          <a href="https://github.com/laminezlord/autowave" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-pen-nib" style="color: #a855f7;"></i></div>
-        <div class="project-info">
-          <span class="project-badge">React app</span>
+      <article class="feat" id="p-snapl">
+        <span class="key" style="--c:#2EC4A0;--t:#14123A" aria-hidden="true"><i class="fas fa-link"></i></span>
+        <div>
+          <p class="feat-kind">Full-stack web app</p>
+          <h3>Snapl: URL shortener</h3>
+          <p>Users create short links with custom or generated aliases, track clicks, and search and sort their links from a dashboard that changes with their role. Comes with a landing page, an in-app admin area, custom error pages and production security settings.</p>
+          <p class="stack"><b>Built with</b> Python, Django, HTML, CSS</p>
+        </div>
+        <div class="links">
+          <a href="https://github.com/laminezlord/url-shortner-backend" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+        </div>
+      </article>
+
+      <article class="feat" id="p-blog">
+        <span class="key" style="--c:#FF5E7E;--t:#14123A" aria-hidden="true"><i class="fas fa-pen-nib"></i></span>
+        <div>
+          <p class="feat-kind">React app</p>
           <h3>Cream Blog</h3>
-          <p>A multi-user blogging platform built in React. Users can sign up, write, edit and delete posts, browse a feed, and manage their posts from a personal dashboard. It uses protected routes, context for login and theme, and a light/dark mode.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">React</span>
-              <span class="tag">React Router</span>
-              <span class="tag">Tailwind CSS</span>
-              <span class="tag">Vite</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/Blog-web" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://blog-web-wheat-three.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-            </div>
-          </div>
+          <p>A multi-user blogging platform. People sign up, write, edit and delete posts, browse a feed, and manage their own posts from a dashboard. Uses protected routes, context for login and theme, and a light and dark mode.</p>
+          <p class="stack"><b>Built with</b> React, React Router, Tailwind CSS, Vite</p>
         </div>
-      </div>
+        <div class="links">
+          <a href="https://blog-web-wheat-three.vercel.app" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live site</a>
+          <a href="https://github.com/laminezlord/Blog-web" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+        </div>
+      </article>
 
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-heart-pulse" style="color: #ef4444;"></i></div>
-        <div class="project-info">
-          <span class="project-badge">Prototype</span>
+      <article class="feat" id="p-vitalis">
+        <span class="key" style="--c:#B9A6FF;--t:#14123A" aria-hidden="true"><i class="fas fa-heart-pulse"></i></span>
+        <div>
+          <p class="feat-kind">Prototype</p>
           <h3>Vitalis AI</h3>
-          <p>A prototype for an AI healthcare assistant: a landing page presenting its features, a how-it-works section, and sign-in and sign-up screens.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">JavaScript</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/Vitalis-AI-Prototype" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://laminezlord.github.io/Vitalis-AI-Prototype/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-            </div>
-          </div>
+          <p>A prototype for an AI healthcare assistant, with a landing page presenting its features, a how-it-works section, and sign-in and sign-up screens.</p>
+          <p class="stack"><b>Built with</b> HTML, CSS, JavaScript</p>
         </div>
-      </div>
+        <div class="links">
+          <a href="https://laminezlord.github.io/Vitalis-AI-Prototype/" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live site</a>
+          <a href="https://github.com/laminezlord/Vitalis-AI-Prototype" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+        </div>
+      </article>
 
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-globe" style="color: #06b6d4;"></i></div>
-        <div class="project-info">
-          <span class="project-badge">Business website</span>
+      <article class="feat" id="p-nexora">
+        <span class="key" style="--c:#3A2E8C;--t:#fff" aria-hidden="true"><i class="fas fa-globe"></i></span>
+        <div>
+          <p class="feat-kind">Business website</p>
           <h3>Nexora Digitals</h3>
-          <p>The website for Nexora Digitals, a web design and development studio. Includes a hero section with browser and phone mockups, a services overview, a four-step process, and a WhatsApp chat button so clients can start a project quickly.</p>
-          <div class="project-footer">
-            <div class="tag-list">
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">JavaScript</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/laminezlord/Nexora-digitals" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://nexora-digitals-nine.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-            </div>
-          </div>
+          <p>The website for Nexora Digitals, a web design and development studio. It has browser and phone mockups in the hero, a services overview, a four-step process and a WhatsApp chat button so clients can start a project quickly.</p>
+          <p class="stack"><b>Built with</b> HTML, CSS, JavaScript</p>
         </div>
+        <div class="links">
+          <a href="https://nexora-digitals-nine.vercel.app" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live site</a>
+          <a href="https://github.com/laminezlord/Nexora-digitals" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="section-head" style="margin-top: 96px; margin-bottom: 24px;">
+      <h2>More projects</h2>
+    </div>
+    <div class="more">
+      <div class="more-item" id="m-drehyalty">
+        <h3>Drehyalty Foods</h3>
+        <div class="more-links"><a href="https://drehyalty-foods.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/drehyalty-foods" target="_blank" rel="noopener">Code</a></div>
+        <p>Website for a Lagos food business selling homemade Nigerian soups, bowls and lunch packs, with a menu, reviews, opening hours and WhatsApp ordering.</p>
+      </div>
+      <div class="more-item" id="m-luxe">
+        <h3>Luxe Haven Properties</h3>
+        <div class="more-links"><a href="https://github.com/laminezlord/Lux_haven" target="_blank" rel="noopener">Code</a></div>
+        <p>Real-estate website with property listings, support services and a contact section.</p>
+      </div>
+      <div class="more-item" id="m-goodlife">
+        <h3>Goodlife Travel Agency</h3>
+        <div class="more-links"><a href="https://goodlifeoverseasolutionvercelapp.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Travel-Agency" target="_blank" rel="noopener">Code</a></div>
+        <p>Website for a Nigerian travel agency that specialises in Canada, listing its services and inviting visitors to get in touch.</p>
+      </div>
+      <div class="more-item" id="m-roamora">
+        <h3>Roamora Travels</h3>
+        <div class="more-links"><a href="https://roamora-travels.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Roamora_Travels" target="_blank" rel="noopener">Code</a></div>
+        <p>Multi-page travel company website with Home, About, Services and Contact pages.</p>
+      </div>
+      <div class="more-item" id="m-booknest">
+        <h3>Book Nest</h3>
+        <div class="more-links"><a href="https://book-web-theta.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Book_Web" target="_blank" rel="noopener">Code</a></div>
+        <p>Book manager for keeping track of your reading list.</p>
+      </div>
+      <div class="more-item" id="m-youtube">
+        <h3>YouTube UI clone</h3>
+        <div class="more-links"><a href="https://you-tube-chi-neon.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/YouTube" target="_blank" rel="noopener">Code</a></div>
+        <p>Pixel-perfect YouTube homepage clone built in 3 days, with a responsive grid, hover states and mobile navigation.</p>
+      </div>
+      <div class="more-item" id="m-todo">
+        <h3>To-do task manager</h3>
+        <div class="more-links"><a href="https://to-do-delta-two.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/To-Do" target="_blank" rel="noopener">Code</a></div>
+        <p>Add, complete, filter and delete tasks, with completion tracking. Tasks are saved in local storage.</p>
+      </div>
+      <div class="more-item" id="m-aptech">
+        <h3>Aptech institutional website</h3>
+        <div class="more-links"><a href="https://aptech-sandy.vercel.app/" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Aptech" target="_blank" rel="noopener">Code</a></div>
+        <p>Multi-page class project with responsive navigation, course listings and a mobile-first design.</p>
+      </div>
+      <div class="more-item" id="m-form">
+        <h3>Smart form validation</h3>
+        <div class="more-links"><a href="https://form-validation-zeta-navy.vercel.app" target="_blank" rel="noopener">Live site</a><a href="https://github.com/laminezlord/Form-Validation" target="_blank" rel="noopener">Code</a></div>
+        <p>Sign-up form that checks each field as you type and shows clear error and success messages.</p>
+      </div>
+      <div class="more-item" id="m-anime">
+        <h3>Anime streaming UI</h3>
+        <div class="more-links"><a href="https://github.com/laminezlord/animepahe" target="_blank" rel="noopener">Code</a></div>
+        <p>Front-end recreation of an anime streaming site, with a poster grid of the latest releases and several linked pages.</p>
       </div>
     </div>
 
-    <h3 class="subsection-title">More Projects</h3>
-    <div class="mini-grid">
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-bowl-food" style="color: #ea580c;"></i></div>
-          <h3>Drehyalty Foods</h3>
-        </div>
-        <p>A food business website for homemade Nigerian soups, meal bowls and lunch packs in Lagos, with a menu, customer reviews, opening hours and ordering through WhatsApp.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/drehyalty-foods" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://drehyalty-foods.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-house" style="color: #b45309;"></i></div>
-          <h3>Luxe Haven Properties</h3>
-        </div>
-        <p>A real-estate website for Luxe Haven Properties, with property listings, support services and a contact section.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/Lux_haven" target="_blank"><i class="fab fa-github"></i> Code</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-plane-departure" style="color: #dc2626;"></i></div>
-          <h3>Goodlife Travel Agency</h3>
-        </div>
-        <p>A website for a Nigerian travel agency that specialises in Canada, listing its services and encouraging visitors to get in touch.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/Travel-Agency" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://goodlifeoverseasolutionvercelapp.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-earth-americas" style="color: #0ea5e9;"></i></div>
-          <h3>Roamora Travels</h3>
-        </div>
-        <p>A multi-page travel company website with separate Home, About, Services and Contact pages.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/Roamora_Travels" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://roamora-travels.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-book" style="color: #7c3aed;"></i></div>
-          <h3>Book Nest</h3>
-        </div>
-        <p>A book manager web app for keeping track of your reading list.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/Book_Web" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://book-web-theta.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fab fa-youtube" style="color: #ff0000;"></i></div>
-          <h3>YouTube UI Clone</h3>
-        </div>
-        <p>A pixel-perfect YouTube homepage clone built in 3 days, with a responsive grid layout, hover states and mobile navigation.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/YouTube" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://you-tube-chi-neon.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-check-square" style="color: #10b981;"></i></div>
-          <h3>To-Do Task Manager</h3>
-        </div>
-        <p>A task manager where you can add, complete, filter and delete tasks, with completion tracking. Tasks are saved in local storage.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/To-Do" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://to-do-delta-two.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-graduation-cap" style="color: var(--accent);"></i></div>
-          <h3>Aptech Institutional Website</h3>
-        </div>
-        <p>A multi-page website for Aptech built as a class project, with responsive navigation, course listings and a mobile-first design.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/Aptech" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://aptech-sandy.vercel.app/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-circle-check" style="color: #22c55e;"></i></div>
-          <h3>Smart Form Validation</h3>
-        </div>
-        <p>A sign-up form that checks each field as you type and shows clear error and success messages.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/Form-Validation" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://form-validation-zeta-navy.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
-      </div>
-
-      <div class="mini-card">
-        <div class="mini-card-head">
-          <div class="project-icon"><i class="fas fa-tv" style="color: #f43f5e;"></i></div>
-          <h3>Anime Streaming UI</h3>
-        </div>
-        <p>A front-end recreation of an anime streaming site, with a poster grid of the latest releases and several linked pages.</p>
-        <div class="project-links">
-          <a href="https://github.com/laminezlord/animepahe" target="_blank"><i class="fab fa-github"></i> Code</a>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="subsection-title">Practice & Coursework</h3>
-    <div class="practice-links">
-      <a href="https://github.com/laminezlord/Python-Programs" target="_blank"><i class="fab fa-python"></i> Python Programs</a>
-      <a href="https://github.com/laminezlord/Java-Script-Programs" target="_blank"><i class="fab fa-js"></i> JavaScript Programs</a>
-      <a href="https://github.com/laminezlord/java-projects" target="_blank"><i class="fab fa-java"></i> Java Projects</a>
-      <a href="https://github.com/laminezlord/C-Programs" target="_blank"><i class="fas fa-c"></i> C Programs</a>
-      <a href="https://github.com/laminezlord/Dart-Programs" target="_blank"><i class="fas fa-code"></i> Dart Programs</a>
+    <div class="practice">
+      <span>Practice and coursework:</span>
+      <a href="https://github.com/laminezlord/Python-Programs" target="_blank" rel="noopener"><i class="fab fa-python" aria-hidden="true"></i> Python</a>
+      <a href="https://github.com/laminezlord/Java-Script-Programs" target="_blank" rel="noopener"><i class="fab fa-js" aria-hidden="true"></i> JavaScript</a>
+      <a href="https://github.com/laminezlord/java-projects" target="_blank" rel="noopener"><i class="fab fa-java" aria-hidden="true"></i> Java</a>
+      <a href="https://github.com/laminezlord/C-Programs" target="_blank" rel="noopener"><i class="fas fa-c" aria-hidden="true"></i> C</a>
+      <a href="https://github.com/laminezlord/Dart-Programs" target="_blank" rel="noopener"><i class="fas fa-code" aria-hidden="true"></i> Dart</a>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="section-label">Get in touch</div>
-    <h2>Let's Work Together</h2>
-    <div class="contact-wrap">
-      <div class="contact-info">
-        <p>I'm currently looking for internship opportunities and freelance projects. Whether you have a question, opportunity, or just want to say hi — I'll get back to you within 24 hours.</p>
-        
-        <div class="contact-links">
-          <a href="mailto:laminezlord27@gmail.com" class="contact-detail">
-            <i class="fas fa-envelope"></i>
-            <span>laminezlord27@gmail.com</span>
-          </a>
-          <a href="https://github.com/laminezlord" target="_blank" class="contact-detail">
-            <i class="fab fa-github"></i>
-            <span>github.com/laminezlord</span>
-          </a>
-          <a href="https://linkedin.com/in/laminezlord" target="_blank" class="contact-detail">
-            <i class="fab fa-linkedin"></i>
-            <span>linkedin.com/in/laminezlord</span>
-          </a>
-          <div class="contact-detail">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Lagos, Nigeria (Open to remote)</span>
-          </div>
+  <section class="section wrap" id="skills">
+    <div class="section-head">
+      <h2>What I work with</h2>
+    </div>
+    <div class="skills">
+      <div>
+        <h3>Languages</h3>
+        <ul><li>Python</li><li>JavaScript</li><li>Dart</li><li>Java</li><li>C</li><li>SQL</li></ul>
+      </div>
+      <div>
+        <h3>Frontend</h3>
+        <ul><li>React</li><li>Tailwind CSS</li><li>Vite</li><li>HTML and CSS</li><li>Responsive design</li><li>UI/UX design</li></ul>
+      </div>
+      <div>
+        <h3>Backend and mobile</h3>
+        <ul><li>Django</li><li>Django REST Framework</li><li>JWT authentication</li><li>Flutter</li><li>Supabase</li><li>REST APIs</li></ul>
+      </div>
+      <div>
+        <h3>Tools</h3>
+        <ul><li>Git and GitHub</li><li>VS Code</li><li>Vercel</li><li>Figma</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="contact">
+    <div class="contact">
+      <div>
+        <h2>Let's work together</h2>
+        <a class="contact-big" href="mailto:laminezlord27@gmail.com">laminezlord27@gmail.com</a>
+        <p>I'm looking for internships and freelance work. Send a message about a role, a project or a question and I'll reply within 24 hours.</p>
+        <div class="socials" style="margin-top: 24px;">
+          <a href="https://github.com/laminezlord" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
+          <a href="https://linkedin.com/in/laminezlord" target="_blank" rel="noopener"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
+          <span><i class="fas fa-location-dot" aria-hidden="true"></i> Lagos, open to remote</span>
         </div>
       </div>
 
       <form id="contactForm" action="https://formspree.io/f/xnqevjdr" method="POST">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" placeholder="Your name" required>
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" placeholder="your@email.com" required>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea name="message" placeholder="Tell me about your project or opportunity..." required></textarea>
-        </div>
-        <button type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
-        <p id="formMessage"></p>
+        <label>Name
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>Email
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>Message
+          <textarea name="message" placeholder="Tell me about the role or project" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-main"><i class="fas fa-paper-plane" aria-hidden="true"></i> Send message</button>
+        <p id="formMessage" role="status"></p>
       </form>
     </div>
   </section>
-
-</div>
+</main>
 
 <footer>
-  <p>© 2026 <a href="#home">Laminez</a> · ADSE Student · Software Developer</p>
+  <div class="wrap">
+    <span>© 2026 Laminez</span>
+    <a href="#top">Back to top</a>
+  </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
 <script>
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navLinks = document.getElementById('navLinks');
-
-mobileMenuBtn.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
-  const icon = mobileMenuBtn.querySelector('i');
-  icon.className = navLinks.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
-});
-
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('active');
-    mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+/* ---------- Theme toggle ---------- */
+(function () {
+  const btn = document.getElementById('themeBtn');
+  const icon = btn.querySelector('i');
+  const isDark = () => {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  };
+  const sync = () => {
+    const d = isDark();
+    icon.className = d ? 'fas fa-sun' : 'fas fa-moon';
+    btn.setAttribute('aria-label', d ? 'Switch to light theme' : 'Switch to dark theme');
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { dark: d } }));
+  };
+  btn.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    sync();
   });
-});
+  sync();
+})();
 
-const toggle = document.getElementById('theme-toggle');
-const icon = toggle.querySelector('i');
-const saved = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', saved);
-icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-toggle.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-  localStorage.setItem('theme', next);
-});
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.section').forEach(s => observer.observe(s));
-
-const sections = document.querySelectorAll('section[id]');
-const navbarLinks = document.querySelectorAll('.nav-link');
-
-window.addEventListener('scroll', () => {
-  let current = '';
-  const scrollPos = window.scrollY + 100;
-  
-  sections.forEach(s => {
-    if (scrollPos >= s.offsetTop) {
-      current = s.getAttribute('id');
-    }
-  });
-  
-  navbarLinks.forEach(a => {
-    a.classList.remove('active');
-    if (a.getAttribute('href') === '#' + current) {
-      a.classList.add('active');
-    }
-  });
-});
-
-const form = document.getElementById('contactForm');
-const formMessage = document.getElementById('formMessage');
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const formData = new FormData(form);
-  
-  try {
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
-    
-    if (response.ok) {
-      formMessage.textContent = '✓ Message sent! I\'ll get back to you soon.';
-      formMessage.style.color = '#22c55e';
+/* ---------- Contact form ---------- */
+(function () {
+  const form = document.getElementById('contactForm');
+  const msg = document.getElementById('formMessage');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = 'Sending…';
+    msg.style.color = '';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error();
+      msg.textContent = 'Message sent. I\'ll reply within 24 hours.';
+      msg.style.color = '#1F9E80';
       form.reset();
-    } else {
-      throw new Error('Failed to send');
+    } catch (err) {
+      msg.textContent = 'Your message didn\'t send. Email me at laminezlord27@gmail.com instead.';
+      msg.style.color = '#E0405F';
     }
-  } catch (error) {
-    formMessage.textContent = '✗ Something went wrong. Please email me directly.';
-    formMessage.style.color = '#ef4444';
-  }
-  
-  setTimeout(() => formMessage.textContent = '', 5000);
-});
-</script>
+  });
+})();
 
+/* ---------- 3D laptop scene ---------- */
+(function () {
+  const stage = document.getElementById('stage');
+  const canvas = document.getElementById('scene');
+  const tip = document.getElementById('tip');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.matchMedia('(hover: none)').matches) {
+    document.querySelector('.stage-hint').textContent = 'Swipe sideways to turn the laptop. Tap the screen to see my projects.';
+  }
+
+  let renderer;
+  try {
+    if (!window.THREE) throw new Error('three missing');
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch (e) {
+    document.documentElement.classList.add('no-webgl');
+    return;
+  }
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  const scene = new THREE.Scene();
+  if (THREE.RoomEnvironment) {
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new THREE.RoomEnvironment(), 0.04).texture;
+  }
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8088c0, 0.35));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.9);
+  sun.position.set(4, 10, 7);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.camera.left = -7; sun.shadow.camera.right = 7;
+  sun.shadow.camera.top = 7; sun.shadow.camera.bottom = -7;
+  sun.shadow.bias = -0.0005;
+  scene.add(sun);
+  const rim = new THREE.DirectionalLight(0xb9a6ff, 0.6);
+  rim.position.set(-6, 4, -5);
+  scene.add(rim);
+
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  const Box = THREE.RoundedBoxGeometry
+    ? (w, h, d, r) => new THREE.RoundedBoxGeometry(w, h, d, 4, r)
+    : (w, h, d) => new THREE.BoxGeometry(w, h, d);
+  function physical(opts) {
+    const m = new THREE.MeshPhysicalMaterial(Object.assign({
+      roughness: 0.4, metalness: 0, clearcoat: 0.6, clearcoatRoughness: 0.3, envMapIntensity: 0.5,
+    }, opts));
+    if (opts.color) m.color.convertSRGBToLinear();
+    return m;
+  }
+  function canvasTexture(c) {
+    const t = new THREE.CanvasTexture(c);
+    t.encoding = THREE.sRGBEncoding;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return t;
+  }
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath();
+    g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+
+  /* --- Laptop --- */
+  const W = 4.4, D = 3.0, BASE_H = 0.16, LID_H = 2.85, LID_T = 0.09;
+  const rig = new THREE.Group();
+  scene.add(rig);
+  const aluminium = physical({ color: '#C9CCDD', metalness: 0.55, roughness: 0.32, clearcoat: 0.3, envMapIntensity: 1 });
+
+  const base = new THREE.Mesh(Box(W, BASE_H, D, 0.07), aluminium);
+  base.position.y = BASE_H / 2;
+  base.castShadow = true; base.receiveShadow = true;
+  rig.add(base);
+
+  // Keyboard deck drawn onto a plane on top of the base
+  const deckCanvas = document.createElement('canvas');
+  deckCanvas.width = 1408; deckCanvas.height = 960;
+  (function drawDeck() {
+    const g = deckCanvas.getContext('2d');
+    const sx = deckCanvas.width / W, sy = deckCanvas.height / D;
+    g.fillStyle = '#C9CCDD'; g.fillRect(0, 0, deckCanvas.width, deckCanvas.height);
+    // keyboard well
+    const kx = 0.32 * sx, ky = 0.28 * sy, kw = (W - 0.64) * sx, kh = 1.25 * sy;
+    g.fillStyle = '#AEB1C6'; roundRect(g, kx - 10, ky - 10, kw + 20, kh + 20, 14); g.fill();
+    const rows = 6, cols = 14, gap = 7;
+    const kwid = (kw - gap * (cols - 1)) / cols, khei = (kh - gap * (rows - 1)) / rows;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        let x = kx + c * (kwid + gap), w = kwid;
+        if (r === 5 && c >= 4 && c <= 9) { if (c > 4) continue; w = kwid * 6 + gap * 5; } // space bar
+        g.fillStyle = '#26244A';
+        roundRect(g, x, ky + r * (khei + gap), w, r === 0 ? khei * 0.7 : khei, 8); g.fill();
+      }
+    }
+    // trackpad
+    const tw = 1.5 * sx, th = 0.95 * sy;
+    g.fillStyle = '#BFC2D5';
+    roundRect(g, (deckCanvas.width - tw) / 2, ky + kh + 0.2 * sy, tw, th, 18); g.fill();
+  })();
+  const deck = new THREE.Mesh(new THREE.PlaneGeometry(W - 0.12, D - 0.12),
+    new THREE.MeshStandardMaterial({ map: canvasTexture(deckCanvas), metalness: 0.35, roughness: 0.45, envMapIntensity: 0.8 }));
+  deck.rotation.x = -Math.PI / 2;
+  deck.position.y = BASE_H + 0.002;
+  deck.receiveShadow = true;
+  rig.add(deck);
+
+  // Lid hinges on the back edge of the base. 0 = upright, PI/2 = closed.
+  const LID_OPEN = -0.28, LID_CLOSED = Math.PI / 2 - 0.02;
+  const hinge = new THREE.Group();
+  hinge.position.set(0, BASE_H, -D / 2 + 0.06);
+  rig.add(hinge);
+  const lid = new THREE.Mesh(Box(W, LID_H, LID_T, 0.06), aluminium);
+  lid.position.set(0, LID_H / 2, -LID_T / 2);
+  lid.castShadow = true;
+  hinge.add(lid);
+  const bezel = new THREE.Mesh(new THREE.PlaneGeometry(W - 0.08, LID_H - 0.08), new THREE.MeshStandardMaterial({ color: 0x0b0a1c, roughness: 0.2 }));
+  bezel.position.set(0, LID_H / 2, 0.001);
+  hinge.add(bezel);
+
+  // Screen: a code editor that types itself
+  const SCREEN_W = W - 0.3, SCREEN_H = LID_H - 0.32;
+  const scr = document.createElement('canvas');
+  scr.width = 1280; scr.height = Math.round(1280 * SCREEN_H / SCREEN_W);
+  const screenTex = canvasTexture(scr);
+  const screen = new THREE.Mesh(new THREE.PlaneGeometry(SCREEN_W, SCREEN_H), new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false }));
+  screen.position.set(0, LID_H / 2 + 0.04, 0.003);
+  hinge.add(screen);
+  const glow = new THREE.PointLight(0x6f84ff, 0, 6);
+  glow.position.set(0, 1.4, 0.6);
+  hinge.add(glow);
+
+  const C = { kw: '#FF7AB6', str: '#7EE7C1', prop: '#9DB2FF', fn: '#FFD479', com: '#7D7BA8', p: '#E9E8FF' };
+  const CODE = [
+    [['const ', C.kw], ['laminez', C.p], [' = {', C.p]],
+    [['  role', C.prop], [': ', C.p], ['"Software developer"', C.str], [',', C.p]],
+    [['  based', C.prop], [': ', C.p], ['"Lagos, Nigeria"', C.str], [',', C.p]],
+    [['  stack', C.prop], [': [', C.p], ['"Django"', C.str], [', ', C.p], ['"React"', C.str], [', ', C.p], ['"Flutter"', C.str], ['],', C.p]],
+    [['  openTo', C.prop], [': ', C.p], ['"internships"', C.str], [',', C.p]],
+    [['};', C.p]],
+    [],
+    [['laminez.', C.p], ['build', C.fn], ['(', C.p], ['"StockPilot"', C.str], [');', C.p]],
+    [['laminez.', C.p], ['build', C.fn], ['(', C.p], ['"AutoWave"', C.str], [');', C.p]],
+    [['laminez.', C.p], ['build', C.fn], ['(', C.p], ['"Snapl"', C.str], [');', C.p]],
+    [['// and 13 more projects below', C.com]],
+  ];
+  const TOTAL = CODE.reduce((n, line) => n + line.reduce((m, t) => m + t[0].length, 0) + 1, 0);
+  let lastDrawn = -1;
+  function drawScreen(shown, cursor, power) {
+    const key = shown * 4 + (cursor ? 2 : 0) + (power >= 1 ? 1 : 0);
+    if (key === lastDrawn && power >= 1) return;
+    lastDrawn = key;
+    const g = scr.getContext('2d');
+    const w = scr.width, h = scr.height;
+    g.globalAlpha = 1;
+    g.fillStyle = '#05040f'; g.fillRect(0, 0, w, h);
+    g.globalAlpha = power;
+    g.fillStyle = '#1B1A3F'; g.fillRect(0, 0, w, h);
+    // title bar
+    g.fillStyle = '#131232'; g.fillRect(0, 0, w, 64);
+    ['#FF5E7E', '#FFB627', '#2EC4A0'].forEach((c, i) => { g.fillStyle = c; g.beginPath(); g.arc(40 + i * 34, 32, 10, 0, Math.PI * 2); g.fill(); });
+    g.fillStyle = '#1B1A3F'; roundRect(g, 160, 14, 200, 50, 10); g.fill(); g.fillRect(160, 40, 200, 24);
+    g.fillStyle = '#E9E8FF'; g.font = '500 24px "JetBrains Mono", monospace'; g.textBaseline = 'middle';
+    g.fillText('laminez.js', 192, 40);
+    // code
+    const fs = 36, lh = 58, gx = 96, top = 118;
+    g.font = '500 ' + fs + 'px "JetBrains Mono", monospace';
+    let left = shown, cx = gx, cy = top;
+    for (let i = 0; i < CODE.length; i++) {
+      const y = top + i * lh;
+      g.fillStyle = '#4C4A7A'; g.textAlign = 'right'; g.fillText(String(i + 1), gx - 30, y); g.textAlign = 'left';
+      let x = gx;
+      for (const [txt, col] of CODE[i]) {
+        if (left <= 0) break;
+        const part = txt.slice(0, left);
+        left -= part.length;
+        g.fillStyle = col; g.fillText(part, x, y);
+        x += g.measureText(part).width;
+      }
+      cx = x; cy = y;
+      if (left <= 0) break;
+      left -= 1; // newline
+    }
+    if (cursor) { g.fillStyle = '#E9E8FF'; g.fillRect(cx + 2, cy - fs * 0.6, 14, fs * 1.2); }
+    g.globalAlpha = 1;
+    screenTex.needsUpdate = true;
+  }
+  drawScreen(0, false, 0);
+
+  const pickables = [screen];
+  const byMesh = new Map([[screen, { p: { id: 'projects', name: 'See my projects' }, isScreen: true }]]);
+
+  /* --- Orbiting code symbols (skills) --- */
+  const GLYPHS = [
+    ['</>', 'HTML & CSS', '#FF5E7E'], ['{ }', 'JavaScript', '#FFB627'], ['py', 'Python', '#2F4BFF'],
+    ['=>', 'React', '#2EC4A0'], ['dart', 'Flutter & Dart', '#B9A6FF'], ['SQL', 'SQL', '#FFB627'],
+    ['#', 'C', '#2EC4A0'], ['git', 'Git & GitHub', '#FF5E7E'], ['api', 'REST APIs', '#6F84FF'],
+  ];
+  const glyphs = [];
+  const orbit = new THREE.Group();
+  scene.add(orbit);
+  if (THREE.FontLoader && THREE.TextGeometry) {
+    new THREE.FontLoader().load('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/fonts/helvetiker_bold.typeface.json', (font) => {
+      GLYPHS.forEach(([text, name, color], i) => {
+        const geo = new THREE.TextGeometry(text, {
+          font, size: 0.42, height: 0.14, curveSegments: 6,
+          bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.018, bevelSegments: 3,
+        });
+        geo.center();
+        const mesh = new THREE.Mesh(geo, physical({ color }));
+        orbit.add(mesh);
+        glyphs.push({
+          mesh, p: { id: 'skills', name }, hover: 0, appear: reduced ? 1 : 0,
+          a: 2.3 + (i / (GLYPHS.length - 1)) * 4.1, r: 2.9 + (i % 3) * 0.35,
+          h: 0.5 + ((i * 5) % 9) / 9 * 3.2, speed: 0.1 + (i % 4) * 0.025,
+        });
+        pickables.push(mesh);
+        byMesh.set(mesh, glyphs[glyphs.length - 1]);
+      });
+    });
+  }
+
+
+  // Camera framing
+  let spreadK = 1;
+  const target = new THREE.Vector3(0, 1.35, 0.2);
+  function frame() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    const narrow = w / h < 0.9;
+    spreadK = narrow ? 0.72 : 1;
+    const dist = narrow ? 14.5 : 12;
+    camera.position.set(dist * 0.4, narrow ? 6.2 : 4.4, dist * 0.92);
+    camera.lookAt(target);
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(frame).observe(stage);
+  frame();
+
+  function applyTheme(dark) { ground.material.opacity = dark ? 0.45 : 0.16; }
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (!document.documentElement.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches));
+  document.addEventListener('themechange', (e) => applyTheme(e.detail.dark));
+
+  /* --- Interaction --- */
+  const ray = new THREE.Raycaster();
+  const ptr = new THREE.Vector2(-10, -10);
+  const REST_Y = 0.22;
+  let rotY = REST_Y, targetRotY = REST_Y, tilt = 0, targetTilt = 0;
+  let dragging = false, dragX = 0, moved = 0, hovered = null;
+
+  function setPtr(e) {
+    const r = canvas.getBoundingClientRect();
+    ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    ptr.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    return r;
+  }
+  function pick() {
+    ray.setFromCamera(ptr, camera);
+    const hit = ray.intersectObjects(pickables)[0];
+    return hit ? byMesh.get(hit.object) : null;
+  }
+  canvas.addEventListener('pointerdown', (e) => {
+    setPtr(e);
+    dragging = true; dragX = e.clientX; moved = 0;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('dragging');
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    const r = setPtr(e);
+    if (dragging) {
+      const dx = e.clientX - dragX; dragX = e.clientX; moved += Math.abs(dx);
+      targetRotY += dx * 0.01;
+    } else if (!reduced) {
+      targetTilt = ptr.y * 0.05;
+    }
+    tip.style.left = (e.clientX - r.left) + 'px';
+    tip.style.top = (e.clientY - r.top) + 'px';
+  });
+  const endDrag = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    canvas.classList.remove('dragging');
+    setPtr(e);
+    const o = moved < 6 ? pick() : null;
+    if (o) open(o.p.id);
+    if (e.pointerType !== 'mouse') ptr.set(-10, -10);
+  };
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', () => { dragging = false; canvas.classList.remove('dragging'); });
+  canvas.addEventListener('pointerleave', () => { if (!dragging) { ptr.set(-10, -10); targetTilt = 0; } });
+
+  function open(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  // Scroll progress through the hero: 0 at the top, 1 once it's mostly gone.
+  let scrollP = 0;
+  const hero = stage.closest('.hero');
+  function onScroll() {
+    const r = hero.getBoundingClientRect();
+    scrollP = Math.min(1, Math.max(0, -r.top / (r.height * 0.7)));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Only render while the hero is on screen
+  let visible = true;
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) loop(); }).observe(stage);
+
+  const smooth = (x) => x * x * (3 - 2 * x);
+  const OPEN_AT = 200, OPEN_MS = 1100, BOOT_MS = 450, CPS = 48;
+  let start = null, last = 0, running = false, clock = 0, burst = 0;
+  function loop() {
+    if (running) return;
+    running = true;
+    requestAnimationFrame(tick);
+  }
+  function tick(now) {
+    if (!visible) { running = false; return; }
+    if (start === null) { start = now; last = now; }
+    const dt = Math.min((now - last) / 1000, 0.05); last = now;
+    const t = reduced ? 1e9 : now - start;
+    if (!reduced) clock += dt;
+    burst += ((reduced ? 0 : scrollP) - burst) * Math.min(1, dt * 8);
+    const ease = smooth(burst);
+
+    // Lid opens on load, closes as you scroll away
+    const openK = smooth(Math.min(1, Math.max(0, (t - OPEN_AT) / OPEN_MS)));
+    const lidAngle = LID_CLOSED + (LID_OPEN - LID_CLOSED) * openK;
+    hinge.rotation.x = lidAngle + (LID_CLOSED - lidAngle) * ease;
+
+    // Screen boots, then the code types out
+    const bootT = t - OPEN_AT - OPEN_MS * 0.6;
+    const power = Math.min(1, Math.max(0, bootT / BOOT_MS)) * (1 - ease);
+    const shown = Math.min(TOTAL, Math.max(0, Math.floor((bootT - BOOT_MS) / 1000 * CPS)));
+    const cursor = shown < TOTAL || Math.floor(now / 530) % 2 === 0;
+    drawScreen(shown, cursor && power > 0.5, power);
+    glow.intensity = power * 0.9;
+
+    // Hover
+    const now_h = pick();
+    if (now_h !== hovered) {
+      hovered = now_h;
+      canvas.classList.toggle('pointing', !!hovered && !dragging);
+      tip.textContent = hovered ? hovered.p.name : '';
+      tip.classList.toggle('show', !!hovered);
+    }
+
+    // Orbiting symbols
+    const ready = openK >= 1 || reduced;
+    glyphs.forEach((s, i) => {
+      if (ready && s.appear < 1) s.appear = Math.min(1, s.appear + dt * 2.5);
+      const goal = s === hovered ? 1 : 0;
+      s.hover += (goal - s.hover) * Math.min(1, dt * 12);
+      // Stay to the sides and back so the screen is never covered
+      const a = s.a + Math.sin(clock * s.speed * 3 + i) * 0.2;
+      const r = s.r * spreadK + ease * 3.5;
+      s.mesh.position.set(Math.cos(a) * r, s.h + Math.sin(clock * 1.2 + i) * 0.15 + ease * (1.5 + (i % 3)), Math.sin(a) * r);
+      s.mesh.lookAt(camera.position);
+      s.mesh.rotateY(Math.sin(clock * 0.8 + i) * 0.35);
+      const pop = s.appear < 1 ? 1 - Math.pow(1 - s.appear, 3) * Math.cos(s.appear * 6) : 1;
+      s.mesh.scale.setScalar(Math.max(0.001, pop * spreadK * (1 + s.hover * 0.3) + (1 - spreadK) * 0.2 * pop));
+    });
+
+    // Gentle idle sway when untouched, eased rotation otherwise
+    if (!dragging && !hovered && !reduced) targetRotY = targetRotY + (Math.sin(clock * 0.35) * 0.22 + REST_Y - targetRotY) * dt * 0.6;
+    rotY += (targetRotY - rotY) * Math.min(1, dt * 6);
+    tilt += (targetTilt - tilt) * Math.min(1, dt * 4);
+    rig.rotation.y = rotY + ease * 0.6;
+    rig.rotation.x = tilt;
+    rig.position.y = -ease * 0.6;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+
+  // Wait for fonts so the code on the screen renders in the right typeface
+  const go = () => { lastDrawn = -1; loop(); };
+  if (document.fonts && document.fonts.load) {
+    Promise.all([
+      document.fonts.load('500 36px "JetBrains Mono"'),
+    ]).then(go, go);
+  } else go();
+})();
+
+/* ---------- 3D tilt on featured projects ---------- */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  document.querySelectorAll('.feat').forEach((card) => {
+    let raf = 0;
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
+        card.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+        card.style.setProperty('--gx', ((x + 0.5) * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', ((y + 0.5) * 100).toFixed(1) + '%');
+      });
+    });
+    card.addEventListener('pointerleave', () => {
+      cancelAnimationFrame(raf);
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+})();
+</script>
 </body>
 </html>
