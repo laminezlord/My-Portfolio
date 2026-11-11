@@ -520,10 +520,21 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   <section class="section wrap" id="projects">
     <div class="section-head">
       <h2>Things I've built</h2>
-      <p class="section-note">The six I'm proudest of, then everything else I've shipped. Hit preview to try a live site without leaving this page.</p>
+      <p class="section-note">The seven I'm proudest of, then everything else I've shipped. Hit preview to try a live site without leaving this page.</p>
     </div>
 
     <div class="featured">
+      <article class="feat" id="p-stockbook">
+        <div class="feat-text">
+          <span class="key" style="--c:#13734F;--t:#fff" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+          <p class="feat-kind">Full-stack web app, in daily use</p>
+          <h3>StockBook: sales and stock for a distributor</h3>
+          <p>Built for my mum's wholesale business, which sells noodles, snacks and drinks by the carton. Staff tap products to make a sale, take cash, transfer or POS, and sell on credit to regular customers. Stock drops with every sale, debts add up per customer, and receipts and payment reminders go out on WhatsApp. She gets a dashboard of sales, profit, money in, who owes what and what is running low. It works on several phones at once, installs like an app, and staff log in with a name and PIN but never see cost prices.</p>
+          <p class="stack"><b>Built with</b> React, Vite, Node.js, PostgreSQL (Neon), Vercel</p>
+          <div class="links"><button type="button" class="btn-preview" data-shots="images/projects/stockbook-sell.jpg|images/projects/stockbook-dashboard.jpg|images/projects/stockbook-stock.jpg" data-title="StockBook"><i class="fas fa-expand" aria-hidden="true"></i> View screens</button></div>
+        </div>
+        <div class="shot"><div class="frame"><div class="frame-bar"><span></span><span></span><span></span><em>stockbook (demo data)</em></div><img src="images/projects/stockbook-sell.jpg" alt="StockBook sell screen with product tiles and the current sale" loading="lazy" width="800" height="499"></div></div>
+      </article>
       <article class="feat" id="p-stockpilot">
         <div class="feat-text">
           <span class="key" style="--c:#2F4BFF;--t:#fff" aria-hidden="true"><i class="fas fa-boxes-stacked"></i></span>
